@@ -1,4 +1,6 @@
 #include <qapplication.h>
+#include <qsplitter.h>
+#include <qlistview.h>
 #include <qpushbutton.h>
 #include <qfont.h>
 #include <qpainter.h>
@@ -7,13 +9,14 @@
 
 // $Date: 2006-05-23 14:20:18 $
 // $Author: lrutten $
-// $Revision: 1.2 $
+// $Revision: 1.1 $
 
 class DVenster : public QWidget
 {
 public:
     DVenster( QWidget *parent=0, const char *name=0 );
     void maakvaart();
+    void maakboom();
     
 protected:
     void paintEvent( QPaintEvent * );
@@ -34,6 +37,20 @@ DVenster::DVenster( QWidget *parent, const char *name )
 }
 
 
+void DVenster::maakboom()
+{
+    QListView *lv = new QListView();
+    lv->setRootIsDecorated(true);
+    lv->addColumn("naam");
+    lv->addColumn("x");
+    lv->addColumn("y");
+    lv->addColumn("z");
+
+    v->maakitem(lv);    
+
+    lv->show();
+}
+
 
 void DVenster::maakvaart()
 {
@@ -45,6 +62,8 @@ void DVenster::maakvaart()
    v->maakstroken();
    v->berekenminmax();
 //   v->toon();
+
+   maakboom();
 }
 
 
@@ -203,15 +222,83 @@ void Driehoek::teken(QPainter *qp, double minz, double maxz)
 }
 
 
+QListViewItem *Vaart::maakitem(QListView *parent)
+{
+   QListViewItem *it = new QListViewItem(parent, "vaart");
+
+   for (int i=0; i<nmetingen; i++)
+   {
+      QListViewItem *itk = metingen[i]->maakitem(it);
+      it->insertItem(itk);
+   }
+   return it;
+}
+
+
+QListViewItem *Meting::maakitem(QListViewItem *parent)
+{
+   QListViewItem *it = new QListViewItem(parent, "Meting");
+   for (int i=0; i<npunten; i++)
+   {
+      QListViewItem *itk = punten[i]->maakitem(it);
+      it->insertItem(itk);
+   }
+   return it;
+}
+
+
+QListViewItem *Punt::maakitem(QListViewItem *parent)
+{
+   char bn[50];
+   char bx[50];
+   char by[50];
+   char bz[50];
+
+   sprintf(bn,"Punt %d", nr);
+   sprintf(bx,"%lf", x);
+   sprintf(by,"%lf", y);
+   sprintf(bz,"%lf", z);
+   QListViewItem *it = new QListViewItem(parent, bn, bx, by, bz);
+
+   return it;
+}
+
 
 int main( int argc, char **argv )
 {
     QApplication a( argc, argv );
 
-    DVenster w;
-    w.setGeometry( 100, 100, 400, 300 );
-    a.setMainWidget( &w );
-    w.show();
+    DVenster *w = new DVenster();
+    w->setGeometry( 100, 100, 400, 300 );
+    a.setMainWidget( w );
+    w->show();
+/*
+    QSplitter *spl = new QSplitter(Qt::Vertical);
+    QListView *lv = new QListView(spl);
+    lv->setRootIsDecorated(true);
+    lv->addColumn("naam");
+    lv->addColumn("x");
+
+    QListViewItem *it = new QListViewItem(lv, "een");
+
+    it->insertItem(new QListViewItem(it, "twee"));
+    it->insertItem(new QListViewItem(it, "drie"));
+    it->insertItem(new QListViewItem(it, "vier"));
+
+    QListViewItem *it2 = new QListViewItem(lv, "vijf");
+
+    it2->insertItem(new QListViewItem(it2, "zes"));
+    it2->insertItem(new QListViewItem(it2, "zeven"));
+    it2->insertItem(new QListViewItem(it2, "acht"));
+
+    it->setExpandable(true);
+    it2->setExpandable(true);
+
+    lv->insertItem(it);
+    lv->insertItem(it2);
+
+    spl->show();
+ */
     return a.exec();
 }
 
