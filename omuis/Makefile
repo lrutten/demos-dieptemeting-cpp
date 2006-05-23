@@ -1,6 +1,6 @@
 # $Date: 2006-05-23 07:59:07 $
 # $Author: lrutten $
-# $Revision: 1.2 $
+# $Revision: 1.1 $
 
 dieptemeting: dieptemeting.o vaart.o meting.o punt.o strook.o driehoek.o
 	g++ -o dieptemeting dieptemeting.o vaart.o meting.o punt.o strook.o driehoek.o -L/usr/lib/qt/lib -lqt-mt
