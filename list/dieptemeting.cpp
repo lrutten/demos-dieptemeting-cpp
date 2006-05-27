@@ -7,9 +7,11 @@
 #include <stdio.h>
 #include "vaart.h"
 
-// $Date: 2006-05-23 14:20:18 $
+// $Date: 2006-05-27 20:55:43 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
+
+// dieptemeting met QListView zonder selectie
 
 class DVenster : public QWidget
 {
@@ -57,8 +59,8 @@ void DVenster::maakvaart()
    printf("start\n");
 
    v = new Vaart();
-   v->leesbestand("OELG_B06.DAT");
-//   v->leesbestand("DATA.DAT");
+//   v->leesbestand("OELG_B06.DAT");
+   v->leesbestand("DATA.DAT");
    v->maakstroken();
    v->berekenminmax();
 //   v->toon();

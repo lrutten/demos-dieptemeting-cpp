@@ -1,0 +1,40 @@
+#ifndef DRIEHOEK_H
+#define DRIEHOEK_H
+
+#include <qlistview.h>
+#include <qpainter.h>
+#include "punt.h"
+
+// $Date: 2006-05-27 20:55:43 $
+// $Author: lrutten $
+// $Revision: 1.1 $
+
+
+class Driehoek
+{
+public:
+   Punt *p1;
+   Punt *p2;
+   Punt *p3;
+
+   bool omuis;
+   bool selectie;
+   
+   Driehoek(Punt *ip1, Punt *ip2, Punt *p3);
+   void toon(int d = 0);
+   void teken(QPainter *qp, double minz, double maxz);
+   QListViewItem *maakitem(QListViewItem *parent);
+   
+   void setomuis(bool b)
+   {
+      omuis = b;
+   }
+   void setselectie(bool b)
+   {
+      selectie = b;
+   }
+   
+};
+
+#endif
+
