@@ -8,12 +8,15 @@
 
 #include "dieptemeting.h"
 
-// $Date: 2006-05-27 20:55:43 $
+// $Date: 2006-05-29 10:55:45 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
 
-// dieptemeting met selectie in QListView
-
+// Dieptemeting met selectie in QListView
+//
+// Bij een selectie in het QListView venster
+// wordt de selectie van de betrokken driehoek zichtbaar
+// in het DVenster venster.
 
 DVenster::DVenster( QWidget *parent, const char *name )
         : QWidget( parent, name )
@@ -256,26 +259,43 @@ void Driehoek::teken(QPainter *qp, double minz, double maxz)
    }
 }
 
-// ---- QListView functies ---------
+// -------- QListView functies -----------
 
 void DVenster::maakboom()
 {
+   // Maak een boomvenster
    lv = new QListView();
+   
+   // Toon een - of + teken
    lv->setRootIsDecorated(true);
+
+   // Toon deze kolommen
    lv->addColumn("naam");
    lv->addColumn("p1 nr");
    lv->addColumn("p2 nr");
    lv->addColumn("p3 nr");
 
+   // Maak alle items
+   // Vaart --> Strook --> Driehoek
    v->maakitem(lv);    
 
+   // Je kan slechts een item selecteren
    lv->setSelectionMode( QListView::Single );
    
+   // Bij een selectionChanged() signal afkomstig
+   // van lv wordt hier slotLVChanged() uitgevoerd.
+   // Deze vorm van eventafhandeling is specifiek voor Qt.
    connect( lv, SIGNAL( selectionChanged() ),
             this, SLOT( slotLVChanged() ) );
    lv->show();
 }
 
+
+/*
+  Een eigen itemklasse noodzakelijk
+  om vanuit een item de betrokken driehoek
+  te kunnen bijhouden.
+ */
 
 class QListViewDriehoekItem : public QListViewItem
 {
@@ -290,7 +310,7 @@ public:
    }
    
 private:
-   Driehoek *drieh;
+   Driehoek *drieh;  // de driehoek die bij deze item hoort
 };
 
 QListViewItem *Vaart::maakitem(QListView *parent)
@@ -334,17 +354,26 @@ QListViewItem *Driehoek::maakitem(QListViewItem *parent)
    return it;
 }
 
+
+// Deze methode loopt bij een selectie in de boom
+
 void DVenster::slotLVChanged()
 {
    printf("slotLVChanged\n");
    
+   // Haal de huidige selectie op.
    QListViewItem *it = lv->currentItem();
+
+   // Dit is een dynamic cast. Het resultaat is NULL (mislukt)
+   // of niet-NULL (gelukt). Deze cast is noodzakelijk om 
+   // aan de driehoek te geraken.
    QListViewDriehoekItem *itd  = dynamic_cast<QListViewDriehoekItem *>(it);
    if (itd != NULL)
    {
       printf("driehoek item\n");
       Driehoek *dr = itd->getDriehoek();
       
+      // pas de selectie aan
       if (dr != dse)
       {
          if (dse != NULL)

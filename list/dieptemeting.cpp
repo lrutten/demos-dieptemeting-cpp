@@ -7,11 +7,12 @@
 #include <stdio.h>
 #include "vaart.h"
 
-// $Date: 2006-05-27 20:55:43 $
+// $Date: 2006-05-29 10:55:45 $
 // $Author: lrutten $
-// $Revision: 1.2 $
+// $Revision: 1.3 $
 
 // dieptemeting met QListView zonder selectie
+// De vaart, metingen en punten worden in een boomformaat weergegeven.
 
 class DVenster : public QWidget
 {
@@ -42,12 +43,18 @@ DVenster::DVenster( QWidget *parent, const char *name )
 void DVenster::maakboom()
 {
     QListView *lv = new QListView();
+   
+    // toon + of - teken
     lv->setRootIsDecorated(true);
+
+    // Er worden 4 kolommen getoond.
+    // De eerste geeft de boom weer.
     lv->addColumn("naam");
     lv->addColumn("x");
     lv->addColumn("y");
     lv->addColumn("z");
 
+    // Maak alle items voor de boom.
     v->maakitem(lv);    
 
     lv->show();
@@ -224,6 +231,8 @@ void Driehoek::teken(QPainter *qp, double minz, double maxz)
 }
 
 
+// Een item voor Vaart bevat alle items voor de metingen.
+
 QListViewItem *Vaart::maakitem(QListView *parent)
 {
    QListViewItem *it = new QListViewItem(parent, "vaart");
@@ -237,6 +246,7 @@ QListViewItem *Vaart::maakitem(QListView *parent)
 }
 
 
+// Een item voor Meting bevat alle items voor de punten.
 QListViewItem *Meting::maakitem(QListViewItem *parent)
 {
    QListViewItem *it = new QListViewItem(parent, "Meting");
@@ -249,6 +259,8 @@ QListViewItem *Meting::maakitem(QListViewItem *parent)
 }
 
 
+// Hier wordt een item voor een Punt gemaakt.
+
 QListViewItem *Punt::maakitem(QListViewItem *parent)
 {
    char bn[50];
@@ -256,10 +268,13 @@ QListViewItem *Punt::maakitem(QListViewItem *parent)
    char by[50];
    char bz[50];
 
+   // Maak de strings voor de 4 kolommen
    sprintf(bn,"Punt %d", nr);
    sprintf(bx,"%lf", x);
    sprintf(by,"%lf", y);
    sprintf(bz,"%lf", z);
+
+   // Maak het item
    QListViewItem *it = new QListViewItem(parent, bn, bx, by, bz);
 
    return it;
@@ -275,6 +290,9 @@ int main( int argc, char **argv )
     a.setMainWidget( w );
     w->show();
 /*
+    Dit fragment was nodig om te experimenteren
+    met QListView en QListViewItem
+
     QSplitter *spl = new QSplitter(Qt::Vertical);
     QListView *lv = new QListView(spl);
     lv->setRootIsDecorated(true);

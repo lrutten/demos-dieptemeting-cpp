@@ -5,9 +5,17 @@
 #include <stdio.h>
 #include "vaart.h"
 
-// $Date: 2006-05-23 14:20:18 $
+// $Date: 2006-05-29 10:55:45 $
 // $Author: lrutten $
-// $Revision: 1.2 $
+// $Revision: 1.3 $
+
+/*
+  In deze versie wordt de vaart in een venster getoond
+  als een balk die volledig in het venster past.
+  De schaalfactor wordt hiervoor aangepast.
+  Er wordt ook rekeningen gehouden met de verschillen tussen
+  de aspectratio's van de vaart en het venster.
+*/
 
 class DVenster : public QWidget
 {
@@ -57,6 +65,7 @@ void DVenster::paintEvent( QPaintEvent * )
     p.save();
     
     // haal de oorsprong, breedte en hoogte op van het venster
+    // de waarden zijn in pixel; xv en yv zijn beide 0
     QRect r = p.viewport();
     int xv = r.left();
     int yv = r.top();
@@ -65,34 +74,43 @@ void DVenster::paintEvent( QPaintEvent * )
     printf("viewport %d %d %d %d\n", xv, yv, bv, hv);
 
     // haal de oorsprong, breedte en hoogte op van het kanaal
+    // deze waarden zijn in km
     int xk = (int) v->getminx();
     int yk = (int) v->getminy();
     int bk = (int) (v->getmaxx() - v->getminx());
     int hk = (int) (v->getmaxy() - v->getminy());
     printf("window %d %d %d %d\n", xk, yk, bk, hk);
 
+    // bereken de aspectratio's
     double av = ((double) hv)/bv;
     double ak = (v->getmaxy() - v->getminy())/(v->getmaxx() - v->getminx());
     
     printf("aspectratio's window %lf  kanaal %lf\n", av, ak);
     
-    // stel in hoe de rechthoek waarbinnen geteken wordt,
-    // zichtbaar wordt in het venster
-    // dit is afhankelijk van de aspectratio a=h/b
+    // Stel in hoe de rechthoek waarbinnen getekend wordt,
+    // zichtbaar wordt in het venster.
+    // Dit is afhankelijk van de aspectratio a=h/b.
+    // Met setViewport wordt ingesteld waar de kader met de vaart 
+    // binnen het venster verschijnt.
+    // De parameters voor setViewport zijn in pixel uitgedrukt.
     if (av > ak)
     {
+       // de voorgestelde vaart is minder hoog dan het venster
+       // de viewportkader past in de volledige breedte van het venster
        int b = bv;
        int h = (int) (ak * b);
        p.setViewport(xv, yv + (hv - h)/2, b, h);
     }
     else
     {
+       // de voorgestelde vaart is smaller dan het venster
+       // de viewportkader past in de volledige hoogte van het venster
        int h = hv;
        int b = (int) (h/ak);
        p.setViewport(xv + (bv - b)/2, yv , b ,h);
     }
 
-    // hiermee stellen we de wereldcoordinaten in    
+    // hiermee stellen we de wereldcoordinaten (in km) in    
     p.setWindow(xk, yk, bk, hk);
     
     
