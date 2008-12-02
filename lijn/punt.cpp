@@ -2,16 +2,16 @@
 #include "punt.h"
 #include "insprong.h"
 
-// $Date: 2008-11-28 15:20:56 $
+// $Date: 2008-12-02 09:59:55 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
 
 
 int Punt::teller = 0;
 
 Punt::Punt(double ix, double iy, double iz) : x(ix), y(iy), z(iz)
 {
-   nr = teller++;
+   nr = ++teller;
 }
 
 void Punt::toon(int d)

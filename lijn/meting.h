@@ -1,20 +1,25 @@
 #ifndef METING_H
 #define METING_H
 
+#include <vector>
+
 #include <qlistview.h>
 #include "punt.h"
 
-// $Date: 2008-11-28 15:20:56 $
+using namespace std;
+
+// $Date: 2008-12-02 09:59:55 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
 
 class Meting
 {
 friend class Vaart;
    
 private:
-   int npunten;
-   Punt *punten[50];
+   //int npunten;
+   //Punt *punten[50];
+   vector<Punt *> punten;
    
 public:
    Meting();

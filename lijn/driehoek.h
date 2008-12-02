@@ -5,9 +5,9 @@
 #include "punt.h"
 #include "zijde.h"
 
-// $Date: 2008-11-28 15:20:56 $
+// $Date: 2008-12-02 09:59:55 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
 
 
 class Driehoek
@@ -25,6 +25,7 @@ public:
    Driehoek(Punt *ip1, Punt *ip2, Punt *p3);
    void toon(int d = 0);
    void teken(QPainter *qp, double minz, double maxz);
+   void dumpobj(FILE *fp);
 };
 
 #endif

@@ -2,26 +2,27 @@
 #include "meting.h"
 #include "insprong.h"
 
-// $Date: 2008-11-28 15:20:56 $
+// $Date: 2008-12-02 09:59:55 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
 
 
 Meting::Meting()
 {
-   npunten = 0;
+   //npunten = 0;
 }
 
 void Meting::voegpuntbij(Punt *p)
 {
-   punten[npunten++] = p;  
+   //punten[npunten++] = p;  
+   punten.push_back(p);
 }
 
 void Meting::toon(int d)
 {
    Insprong::springin(d);
    printf("Meting\n");
-   for (int i = 0; i<npunten; i++)
+   for (int i = 0; i<punten.size(); i++)
    {
       punten[i]->toon(d + 1);
    }
@@ -33,7 +34,7 @@ double Meting::berekenminx()
    
    min = punten[0]->x;
    
-   for (int i=1; i<npunten; i++)
+   for (int i=1; i<punten.size(); i++)
    {
       if (punten[i]->x < min)
       {
@@ -49,7 +50,7 @@ double Meting::berekenmaxx()
    
    max = punten[0]->x;
    
-   for (int i=1; i<npunten; i++)
+   for (int i=1; i<punten.size(); i++)
    {
       if (punten[i]->x > max)
       {
@@ -65,7 +66,7 @@ double Meting::berekenminy()
    
    min = punten[0]->y;
    
-   for (int i=1; i<npunten; i++)
+   for (int i=1; i<punten.size(); i++)
    {
       if (punten[i]->y < min)
       {
@@ -81,7 +82,7 @@ double Meting::berekenmaxy()
    
    max = punten[0]->y;
    
-   for (int i=1; i<npunten; i++)
+   for (int i=1; i<punten.size(); i++)
    {
       if (punten[i]->y > max)
       {
@@ -97,7 +98,7 @@ double Meting::berekenminz()
    
    min = punten[0]->z;
    
-   for (int i=1; i<npunten; i++)
+   for (int i=1; i<punten.size(); i++)
    {
       if (punten[i]->z < min)
       {
@@ -113,7 +114,7 @@ double Meting::berekenmaxz()
    
    max = punten[0]->z;
    
-   for (int i=1; i<npunten; i++)
+   for (int i=1; i<punten.size(); i++)
    {
       if (punten[i]->z > max)
       {

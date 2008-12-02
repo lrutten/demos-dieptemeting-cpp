@@ -1,24 +1,26 @@
 #ifndef VAART_H
 #define VAART_H
 
+#include <vector>
+
 #include <qpainter.h>
 #include <qlistview.h>
 #include "meting.h"
 #include "strook.h"
 #include "zijden.h"
 
-// $Date: 2008-11-28 15:20:56 $
+using namespace std;
+
+// $Date: 2008-12-02 09:59:55 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
 
 
 class Vaart
 {
 private:
-   int nmetingen;
-   Meting *metingen[2500];
-   int nstroken;
-   Strook *stroken[2500];
+   vector<Meting *> metingen;
+   vector<Strook *> stroken;
    Zijden *zijden;
    
    double minx;
@@ -39,8 +41,9 @@ public:
    void maakstroken();
    void berekenminmax();
    void teken(QPainter *qp, double minz, double maxz);
-   QListViewItem *maakitem(QListView *parent);   
-   
+   QListViewItem *maakitem(QListView *parent);
+   void dumpobj(char * bestand);
+ 
    double getminx()
    {
       return minx;

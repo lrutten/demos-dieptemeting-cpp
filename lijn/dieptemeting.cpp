@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include "vaart.h"
 
-// $Date: 2008-11-28 15:20:56 $
+// $Date: 2008-12-02 09:59:55 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
 
 // dieptemeting met QListView zonder selectie
 // De vaart, metingen en punten worden in een boomformaat weergegeven.
@@ -72,6 +72,7 @@ void DVenster::maakvaart()
    v->berekenminmax();
    v->toon();
 
+   v->dumpobj("diepte.obj");
    maakboom();
 }
 
@@ -163,7 +164,7 @@ void DVenster::paintEvent( QPaintEvent * )
 void Vaart::teken(QPainter *qp, double minz, double maxz)
 {
    // teken alle stroken
-   for (int i=0; i<nstroken; i++)
+   for (int i=0; i<stroken.size(); i++)
    {
       stroken[i]->teken(qp, minz, maxz);
    }
@@ -172,7 +173,7 @@ void Vaart::teken(QPainter *qp, double minz, double maxz)
 void Strook::teken(QPainter *qp, double minz, double maxz)
 {
    // teken alle driehoeken
-   for (int i=0; i<ndriehoeken; i++)
+   for (int i=0; i<driehoeken.size(); i++)
    {
       driehoeken[i]->teken(qp, minz, maxz);
    }
@@ -237,7 +238,7 @@ QListViewItem *Vaart::maakitem(QListView *parent)
 {
    QListViewItem *it = new QListViewItem(parent, "vaart");
 
-   for (int i=0; i<nmetingen; i++)
+   for (int i=0; i<metingen.size(); i++)
    {
       QListViewItem *itk = metingen[i]->maakitem(it);
       it->insertItem(itk);
@@ -250,7 +251,7 @@ QListViewItem *Vaart::maakitem(QListView *parent)
 QListViewItem *Meting::maakitem(QListViewItem *parent)
 {
    QListViewItem *it = new QListViewItem(parent, "Meting");
-   for (int i=0; i<npunten; i++)
+   for (int i=0; i<punten.size(); i++)
    {
       QListViewItem *itk = punten[i]->maakitem(it);
       it->insertItem(itk);

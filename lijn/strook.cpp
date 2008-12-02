@@ -2,28 +2,32 @@
 #include "strook.h"
 #include "insprong.h"
 
-// $Date: 2008-11-28 15:20:56 $
+// $Date: 2008-12-02 09:59:55 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
 
 
 Strook::Strook()
 {
-   ndriehoeken = 0;
 }
 
 void Strook::voegdriehoekbij(Driehoek *d)
 {
-   driehoeken[ndriehoeken++] = d;  
+   driehoeken.push_back(d);  
 }
 
 void Strook::toon(int d)
 {
    Insprong::springin(d);
    printf("Strook\n");
-   for (int i = 0; i<ndriehoeken; i++)
+   for (int i = 0; i<driehoeken.size(); i++)
    {
       driehoeken[i]->toon(d + 1);
    }
+}
+
+void Strook::dumpobj(FILE *fp)
+{
+
 }
 
