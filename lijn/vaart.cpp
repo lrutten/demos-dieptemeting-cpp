@@ -2,9 +2,9 @@
 #include "vaart.h"
 #include "insprong.h"
 
-// $Date: 2008-12-02 09:59:55 $
+// $Date: 2008-12-02 10:40:59 $
 // $Author: lrutten $
-// $Revision: 1.2 $
+// $Revision: 1.3 $
 
 Vaart::Vaart()
 {
@@ -64,10 +64,28 @@ void Vaart::dumpobj(char *bestand)
    FILE *fp = fopen(bestand, "w");
    if (fp != NULL)
    {
-      /*for (int im=0; im < metingen.size(); im++)
+      // dump alle punten
+      for (int im=0; im < metingen.size(); im++)
       {
+         Meting *m = metingen[im];
+         for (int ip=0; ip<m->punten.size(); ip++)
+         {
+            Punt *p = m->punten[ip];
+            fprintf(fp, "v %lf %lf %lf\n", p->x, p->y, p->z);
+         }
+      }
 
-      }*/
+      // dump alle driehoeken
+      for (int is=0; is < stroken.size(); is++)
+      {
+         Strook *s = stroken[is];
+         for (int id=0; id < s->driehoeken.size(); id++)
+         {
+            Driehoek *d = s->driehoeken[id];
+            fprintf(fp,"f %d %d %d\n", d->p1->nr, d->p2->nr, d->p3->nr); 
+         }
+      }
+      fclose(fp);
    }
    else
    {
@@ -86,6 +104,10 @@ int Vaart::isleeg(char *bf)
 	}
 	return ntekens == 0;
 }
+
+
+#define SENSORBREEDTE 60
+#define ZFACTOR        2
 
 
 // deze functie is overgenomen van Jo Vliegen
@@ -127,7 +149,7 @@ void Vaart::leesbestand(char *naam)
 		{
 			sscanf(&buf[42+(i*4)],"%d",&temp);
 
-			Punt *p = new Punt(xx,yy+i*6,temp*10);
+			Punt *p = new Punt(xx,yy+i*SENSORBREEDTE,temp*ZFACTOR);
 			m->voegpuntbij(p);
 		}
 

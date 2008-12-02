@@ -2,9 +2,9 @@
 #include "zijden.h"
 #include "insprong.h"
 
-// $Date: 2008-11-28 15:20:56 $
+// $Date: 2008-12-02 10:40:59 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
 
 
 Zijden::Zijden()
@@ -20,15 +20,15 @@ void Zijden::voegzijdebij(Zijde *z)
 
 void Zijden::voegdriehoekbij(Driehoek *d)
 {
-   printf("Zijden::voegdriehoekbij()\n");
+   //printf("Zijden::voegdriehoekbij()\n");
    Zijde *z12 = voegzijdebij(d->p1, d->p2);
-   printf("z12 %p\n", z12);
+   //printf("z12 %p\n", z12);
 
    Zijde *z23 = voegzijdebij(d->p2, d->p3);
-   printf("z23 %p\n", z23);
+   //printf("z23 %p\n", z23);
 
    Zijde *z31 = voegzijdebij(d->p3, d->p1);
-   printf("z31 %p\n", z31);
+   //printf("z31 %p\n", z31);
 
    d->z12 = z12;
    d->z23 = z23;
@@ -38,7 +38,7 @@ void Zijden::voegdriehoekbij(Driehoek *d)
 
 Zijde *Zijden::voegzijdebij(Punt *p1, Punt *p2)
 {
-   printf("Zijden::voegzijdehoekbij()\n");
+   //printf("Zijden::voegzijdehoekbij()\n");
    Zijde *z = zoek(p1, p2);
    if (z != NULL)
    {
@@ -65,12 +65,12 @@ Zijde *Zijden::zoek(Punt *p1, Punt *p2)
    map<Punt *, map<Punt *, Zijde *> >::iterator it1 = zijden.find(p1);
    if (it1 != zijden.end())
    {
-      printf("p1a gevonden\n");
+      //printf("p1a gevonden\n");
       map<Punt *, Zijde *> map2 = (*it1).second;
       map<Punt *, Zijde *>::iterator it2 = map2.find(p2);
       if (it2 != map2.end())
       {
-         printf("p2a gevonden\n");
+         //printf("p2a gevonden\n");
          return (*it2).second;
       }
       else
@@ -83,12 +83,12 @@ Zijde *Zijden::zoek(Punt *p1, Punt *p2)
       it1 = zijden.find(p2);
       if (it1 != zijden.end())
       {
-         printf("p2b gevonden\n");
+         //printf("p2b gevonden\n");
          map<Punt *, Zijde *> map2 = (*it1).second;
          map<Punt *, Zijde *>::iterator it2 = map2.find(p1);
          if (it2 != map2.end())
          {
-            printf("p1b gevonden\n");
+            //printf("p1b gevonden\n");
             return (*it2).second;
          }
          else

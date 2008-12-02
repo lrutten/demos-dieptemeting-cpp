@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include "vaart.h"
 
-// $Date: 2008-12-02 09:59:55 $
+// $Date: 2008-12-02 10:40:59 $
 // $Author: lrutten $
-// $Revision: 1.2 $
+// $Revision: 1.3 $
 
 // dieptemeting met QListView zonder selectie
 // De vaart, metingen en punten worden in een boomformaat weergegeven.
@@ -55,7 +55,7 @@ void DVenster::maakboom()
     lv->addColumn("z");
 
     // Maak alle items voor de boom.
-    v->maakitem(lv);    
+    v->maakitem(lv);
 
     lv->show();
 }
@@ -66,13 +66,13 @@ void DVenster::maakvaart()
    printf("start\n");
 
    v = new Vaart();
-//   v->leesbestand("OELG_B06.DAT");
-   v->leesbestand("DATA.DAT");
+   v->leesbestand("OELG_B06.DAT");
+//   v->leesbestand("DATA.DAT");
    v->maakstroken();
    v->berekenminmax();
-   v->toon();
+   //v->toon();
 
-   v->dumpobj("diepte.obj");
+   v->dumpobj("java/diepte.obj");
    maakboom();
 }
 
