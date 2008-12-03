@@ -2,9 +2,9 @@
 #include "vaart.h"
 #include "insprong.h"
 
-// $Date: 2008-12-02 10:40:59 $
+// $Date: 2008-12-03 13:04:23 $
 // $Author: lrutten $
-// $Revision: 1.3 $
+// $Revision: 1.4 $
 
 Vaart::Vaart()
 {
@@ -15,7 +15,7 @@ Vaart::Vaart()
    minz = 0.0;
    maxz = 0.0;
    
-   zijden = new Zijden();
+   dieptelijnen = new Dieptelijnen(this, 50);
 }
 
 void Vaart::voegmetingbij(Meting *m)
@@ -48,6 +48,8 @@ void Vaart::toon(int d)
    Insprong::springin(d);
    printf("maxz %lf\n", maxz);
 
+   return;
+
    for (int i = 0; i<metingen.size(); i++)
    {
       metingen[i]->toon(d + 1);
@@ -56,7 +58,7 @@ void Vaart::toon(int d)
    {
       stroken[i]->toon(d + 1);
    }
-   zijden->toon(d + 1);
+   dieptelijnen->toon(d + 1);
 }
 
 void Vaart::dumpobj(char *bestand)
@@ -107,7 +109,7 @@ int Vaart::isleeg(char *bf)
 
 
 #define SENSORBREEDTE 60
-#define ZFACTOR        2
+#define ZFACTOR        1
 
 
 // deze functie is overgenomen van Jo Vliegen
@@ -148,6 +150,7 @@ void Vaart::leesbestand(char *naam)
 		for(i=0;i<n;i++)
 		{
 			sscanf(&buf[42+(i*4)],"%d",&temp);
+         //printf("z %d\n", temp);
 
 			Punt *p = new Punt(xx,yy+i*SENSORBREEDTE,temp*ZFACTOR);
 			m->voegpuntbij(p);
@@ -183,8 +186,8 @@ void Vaart::maakstroken()
          s->voegdriehoekbij(d1);
          s->voegdriehoekbij(d2);
          
-         zijden->voegdriehoekbij(d1);
-         zijden->voegdriehoekbij(d2);
+         //zijden->voegdriehoekbij(d1);
+         //zijden->voegdriehoekbij(d2);
       }
    }
 }
@@ -257,4 +260,9 @@ void Vaart::berekenminmax()
          maxz = temp;
       }
    }
+}
+
+void Vaart::maakdieptelijnen()
+{
+   dieptelijnen->maakdieptelijnen();
 }

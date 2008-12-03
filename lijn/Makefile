@@ -1,9 +1,9 @@
-# $Date: 2008-11-28 15:20:56 $
+# $Date: 2008-12-03 13:04:22 $
 # $Author: lrutten $
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
-dieptemeting: dieptemeting.o vaart.o meting.o punt.o strook.o driehoek.o zijden.o zijde.o
-	g++ -o dieptemeting dieptemeting.o vaart.o meting.o punt.o strook.o driehoek.o zijden.o zijde.o -L/usr/lib/qt/lib -lqt-mt
+dieptemeting: dieptemeting.o vaart.o meting.o punt.o strook.o driehoek.o zijden.o zijde.o dieptelijnen.o
+	g++ -o dieptemeting dieptemeting.o vaart.o meting.o punt.o strook.o driehoek.o zijden.o zijde.o dieptelijnen.o -L/usr/lib/qt/lib -lqt-mt
 
 
 dieptemeting.o: dieptemeting.cpp vaart.h meting.h punt.h strook.h driehoek.h
@@ -29,4 +29,8 @@ zijden.o: zijden.cpp zijde.h
 
 zijde.o: zijde.cpp zijde.h 
 	g++ -c -g zijde.cpp
+
+dieptelijnen.o: dieptelijnen.cpp dieptelijnen.h 
+	g++ -c -g dieptelijnen.cpp
+
 

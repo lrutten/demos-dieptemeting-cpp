@@ -8,20 +8,24 @@
 #include "meting.h"
 #include "strook.h"
 #include "zijden.h"
+#include "dieptelijnen.h"
 
 using namespace std;
 
-// $Date: 2008-12-02 09:59:55 $
+// $Date: 2008-12-03 13:04:23 $
 // $Author: lrutten $
-// $Revision: 1.2 $
+// $Revision: 1.3 $
 
+class Dieptelijnen;
 
 class Vaart
 {
+friend class Dieptelijnen;
+
 private:
    vector<Meting *> metingen;
    vector<Strook *> stroken;
-   Zijden *zijden;
+   Dieptelijnen    *dieptelijnen;
    
    double minx;
    double maxx;
@@ -39,6 +43,7 @@ public:
    void leesbestand(char *naam);
    int isleeg(char *bf);
    void maakstroken();
+   void maakdieptelijnen();
    void berekenminmax();
    void teken(QPainter *qp, double minz, double maxz);
    QListViewItem *maakitem(QListView *parent);
