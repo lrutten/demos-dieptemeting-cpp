@@ -8,14 +8,15 @@
 
 using namespace std;
 
-// $Date: 2008-12-02 10:40:59 $
+// $Date: 2008-12-03 16:12:40 $
 // $Author: lrutten $
-// $Revision: 1.3 $
+// $Revision: 1.4 $
 
 
 class Strook
 {
 friend class Vaart;
+friend class Dieptelijnen;
 
 private:
    vector<Driehoek *> driehoeken;

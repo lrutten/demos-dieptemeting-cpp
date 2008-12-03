@@ -2,9 +2,9 @@
 #include "vaart.h"
 #include "insprong.h"
 
-// $Date: 2008-12-03 13:04:23 $
+// $Date: 2008-12-03 16:12:40 $
 // $Author: lrutten $
-// $Revision: 1.4 $
+// $Revision: 1.5 $
 
 Vaart::Vaart()
 {
@@ -15,7 +15,7 @@ Vaart::Vaart()
    minz = 0.0;
    maxz = 0.0;
    
-   dieptelijnen = new Dieptelijnen(this, 50);
+   dieptelijnen = new Dieptelijnen(this, 50.0);
 }
 
 void Vaart::voegmetingbij(Meting *m)
@@ -48,8 +48,8 @@ void Vaart::toon(int d)
    Insprong::springin(d);
    printf("maxz %lf\n", maxz);
 
-   return;
 
+   /*
    for (int i = 0; i<metingen.size(); i++)
    {
       metingen[i]->toon(d + 1);
@@ -58,6 +58,7 @@ void Vaart::toon(int d)
    {
       stroken[i]->toon(d + 1);
    }
+   */
    dieptelijnen->toon(d + 1);
 }
 

@@ -10,13 +10,15 @@
 
 using namespace std;
 
-// $Date: 2008-11-28 15:20:56 $
+// $Date: 2008-12-03 16:12:40 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
 
 
 class Zijden
 {
+friend class Dieptelijnen;
+
 private:
    //vector<Zijde *> zijden;
    map<Punt *, map<Punt *,Zijde *> > zijden;

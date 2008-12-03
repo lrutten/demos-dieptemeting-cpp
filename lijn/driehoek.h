@@ -5,14 +5,15 @@
 #include "punt.h"
 #include "zijde.h"
 
-// $Date: 2008-12-02 09:59:55 $
+// $Date: 2008-12-03 16:12:40 $
 // $Author: lrutten $
-// $Revision: 1.2 $
+// $Revision: 1.3 $
 
 
 class Driehoek
 {
 friend class Zijden;
+friend class Dieptelijnen;
 
 public:
    Punt *p1;
