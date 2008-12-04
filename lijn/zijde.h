@@ -3,18 +3,20 @@
 
 #include "punt.h"
 
-// $Date: 2008-11-28 15:20:56 $
+// $Date: 2008-12-04 09:36:02 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
 
 
 class Zijde
 {
 public:
-   Punt *p1;
-   Punt *p2;
-
-   int nr;
+   Punt  *p1;
+   Punt  *p2;
+   double zmin;
+   double zmax;
+   bool   snijding;
+   int    nr;
    static int teller;
    
    Zijde(Punt *ip1, Punt *ip2);

@@ -2,9 +2,11 @@
 #include "dieptelijnen.h"
 #include "insprong.h"
 
-// $Date: 2008-12-03 16:12:40 $
+#include <algorithm>
+
+// $Date: 2008-12-04 09:36:02 $
 // $Author: lrutten $
-// $Revision: 1.2 $
+// $Revision: 1.3 $
 
 
 Dieptelijnen::Dieptelijnen(Vaart *v, double dz) : vaart(v), deltaz(dz)
@@ -49,6 +51,12 @@ void Dieptelijnen::maakzijden()
    }
 }
 
+// vergelijk twee zijden op de max z
+bool cmp(const Zijde *a, const Zijde *b)
+{
+   return a->zmax < b->zmax;
+}
+
 void Dieptelijnen::maakvlakken()
 {
    printf("Dieptelijnen::maakvlakken()\n");
@@ -87,27 +95,60 @@ void Dieptelijnen::maakvlakken()
       vlakken.push_back(v);
       z += dz;
    }
+
+   // overloop alle zijden
+   map<Punt *, map<Punt *, Zijde *> >::iterator ir= zijden->zijden.begin();
+   while (ir != zijden->zijden.end())
+   {
+      //Punt *p = (*ir).first;
+      map<Punt *, Zijde *>::iterator ik = (*ir).second.begin();
+      while (ik != (*ir).second.end())
+      {
+         //Punt *q = (*ik).first;
+         Zijde *zz = (*ik).second;
+         //zz->toon(0);
+         
+         // kopieer de zijde naar de vector
+         vzijden.push_back(zz);
+         ik++;
+      }
+      ir++;
+   }
+
+   // sorteer de lijst
+   std::sort(vzijden.begin(), vzijden.end(), cmp);
+      
+   for (int i=0; i<vzijden.size(); i++)
+   {
+      Zijde *zij = vzijden[i];
+      //printf("zijde zmin %lf zmax %lf df %lf\n", zij->zmin, zij->zmax, zij->zmax - zij->zmin);
+   }
    
+   // overloop alle vlakken
+   // en tegelijkertijd de zijden
+   int iz = 0;
    for (int iv=0; iv < vlakken.size(); iv++)
    {
       Vlak *v = vlakken[iv];
       printf("vlak z %lf\n", v->z);
       
-      map<Punt *, map<Punt *, Zijde *> >::iterator ir= zijden->zijden.begin();
-      while (ir != zijden->zijden.end())
+      // sla de zijden met een te lage z over
+      while (iz < vzijden.size() && vzijden[iz]->zmax < v->z)
       {
-         //Punt *p = (*ir).first;
-         map<Punt *, Zijde *>::iterator ik = (*ir).second.begin();
-         while (ik != (*ir).second.end())
-         {
-            //Punt *q = (*ik).first;
-            Zijde *zz = (*ik).second;
-            //zz->toon(0);
-   
-            ik++;
-         }
-         ir++;
+         Zijde *zij = vzijden[iz];
+         //printf("v zmax laag %lf zijde zmin %lf zmax %lf df %lf\n", v->z, zij->zmin, zij->zmax, zij->zmax - zij->zmin);
+         
+         iz++;
       }
+      
+      while (iz < vzijden.size() && vzijden[iz]->zmin <= v->z && vzijden[iz]->zmax <= v->z)
+      {
+         Zijde *zij = vzijden[iz];
+         zij->snijding = true;
+         printf("v %lf zmax ok  zijde zmin %lf zmax %lf df %lf\n", v->z, zij->zmin, zij->zmax, zij->zmax - zij->zmin);
+         iz++;
+      }
+      
    }
 }
 

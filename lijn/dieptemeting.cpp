@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include "vaart.h"
 
-// $Date: 2008-12-03 13:04:23 $
+// $Date: 2008-12-04 09:36:02 $
 // $Author: lrutten $
-// $Revision: 1.4 $
+// $Revision: 1.5 $
 
 // dieptemeting met QListView zonder selectie
 // De vaart, metingen en punten worden in een boomformaat weergegeven.
@@ -170,6 +170,7 @@ void Vaart::teken(QPainter *qp, double minz, double maxz)
    {
       stroken[i]->teken(qp, minz, maxz);
    }
+   dieptelijnen->teken(qp);
 }
 
 void Strook::teken(QPainter *qp, double minz, double maxz)
@@ -232,6 +233,29 @@ void Driehoek::teken(QPainter *qp, double minz, double maxz)
    pts.setPoints( 3,   x1, y1, x2, y2, x3, y3 );
    qp->drawConvexPolygon( pts );
 }
+
+
+void Dieptelijnen::teken(QPainter *qp)
+{
+   for (int iz=0; iz < vzijden.size(); iz++)
+   {
+      Zijde *zz = vzijden[iz];
+      if (zz->snijding)
+      {
+         int x1 = (int) zz->p1->x;
+         int y1 = (int) zz->p1->y;
+         int x2 = (int) zz->p2->x;
+         int y2 = (int) zz->p2->y;
+         
+         qp->setPen( QColor(0,0,0));
+         qp->drawLine(x1, y1, x2, y2);
+      }
+   }
+}
+
+
+
+
 
 
 // Een item voor Vaart bevat alle items voor de metingen.
