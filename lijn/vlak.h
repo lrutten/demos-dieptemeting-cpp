@@ -8,14 +8,15 @@
 
 using namespace std;
 
-// $Date: 2008-12-03 16:12:40 $
+// $Date: 2008-12-04 16:30:27 $
 // $Author: lrutten $
-// $Revision: 1.1 $
+// $Revision: 1.2 $
 
 
 class Vlak
 {
 friend class Dieptelijnen;
+friend class Zijde;
 
 private:
    double z;

@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include "vaart.h"
 
-// $Date: 2008-12-04 09:36:02 $
+// $Date: 2008-12-04 16:30:27 $
 // $Author: lrutten $
-// $Revision: 1.5 $
+// $Revision: 1.6 $
 
 // dieptemeting met QListView zonder selectie
 // De vaart, metingen en punten worden in een boomformaat weergegeven.
@@ -240,7 +240,28 @@ void Dieptelijnen::teken(QPainter *qp)
    for (int iz=0; iz < vzijden.size(); iz++)
    {
       Zijde *zz = vzijden[iz];
+      /*
       if (zz->snijding)
+      {
+         int x1 = (int) zz->p1->x;
+         int y1 = (int) zz->p1->y;
+         int x2 = (int) zz->p2->x;
+         int y2 = (int) zz->p2->y;
+         
+         qp->setPen( QColor(0,0,0));
+         qp->drawLine(x1, y1, x2, y2);
+      }
+      */
+      if (zz->snijpunt != NULL)
+      {
+         int x1 = (int) zz->snijpunt->x;
+         int y1 = (int) zz->snijpunt->y;
+         
+         qp->setPen( QColor(0,0,0));
+         qp->drawLine(x1, y1, x1, y1+5);
+      }
+      else
+      if (zz->snijvlak != NULL)
       {
          int x1 = (int) zz->p1->x;
          int y1 = (int) zz->p1->y;

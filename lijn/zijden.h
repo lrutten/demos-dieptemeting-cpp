@@ -4,16 +4,20 @@
 
 //#include <vector>
 #include <map>
+
+#include "alles.h"
+
 #include "punt.h"
 #include "driehoek.h"
 #include "zijde.h"
 
 using namespace std;
 
-// $Date: 2008-12-03 16:12:40 $
+// $Date: 2008-12-04 16:30:27 $
 // $Author: lrutten $
-// $Revision: 1.2 $
+// $Revision: 1.3 $
 
+class Driehoek;
 
 class Zijden
 {

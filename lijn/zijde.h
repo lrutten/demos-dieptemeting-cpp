@@ -1,11 +1,13 @@
 #ifndef ZIJDE_H
 #define ZIJDE_H
 
+#include "alles.h"
 #include "punt.h"
+#include "vlak.h"
 
-// $Date: 2008-12-04 09:36:02 $
+// $Date: 2008-12-04 16:30:27 $
 // $Author: lrutten $
-// $Revision: 1.2 $
+// $Revision: 1.3 $
 
 
 class Zijde
@@ -13,6 +15,8 @@ class Zijde
 public:
    Punt  *p1;
    Punt  *p2;
+   Punt  *snijpunt;
+   Vlak  *snijvlak;
    double zmin;
    double zmax;
    bool   snijding;
@@ -21,6 +25,7 @@ public:
    
    Zijde(Punt *ip1, Punt *ip2);
    void toon(int d = 0);
+   void berekensnijpunt(Vlak *v);
 };
 
 #endif

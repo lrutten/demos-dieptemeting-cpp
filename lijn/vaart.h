@@ -5,18 +5,24 @@
 
 #include <qpainter.h>
 #include <qlistview.h>
+
+#include "alles.h"
+
 #include "meting.h"
+#include "driehoek.h"
 #include "strook.h"
+#include "zijde.h"
 #include "zijden.h"
 #include "dieptelijnen.h"
 
 using namespace std;
 
-// $Date: 2008-12-03 13:04:23 $
+// $Date: 2008-12-04 16:30:27 $
 // $Author: lrutten $
-// $Revision: 1.3 $
+// $Revision: 1.4 $
 
 class Dieptelijnen;
+class Strook;
 
 class Vaart
 {

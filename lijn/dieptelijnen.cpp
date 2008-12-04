@@ -4,9 +4,9 @@
 
 #include <algorithm>
 
-// $Date: 2008-12-04 09:36:02 $
+// $Date: 2008-12-04 16:30:27 $
 // $Author: lrutten $
-// $Revision: 1.3 $
+// $Revision: 1.4 $
 
 
 Dieptelijnen::Dieptelijnen(Vaart *v, double dz) : vaart(v), deltaz(dz)
@@ -126,27 +126,32 @@ void Dieptelijnen::maakvlakken()
    
    // overloop alle vlakken
    // en tegelijkertijd de zijden
-   int iz = 0;
+   //int iz = 0;
    for (int iv=0; iv < vlakken.size(); iv++)
    {
       Vlak *v = vlakken[iv];
       printf("vlak z %lf\n", v->z);
       
       // sla de zijden met een te lage z over
+      /*
       while (iz < vzijden.size() && vzijden[iz]->zmax < v->z)
       {
          Zijde *zij = vzijden[iz];
-         //printf("v zmax laag %lf zijde zmin %lf zmax %lf df %lf\n", v->z, zij->zmin, zij->zmax, zij->zmax - zij->zmin);
+         printf("v zmax laag %lf zijde zmin %lf zmax %lf df %lf\n", v->z, zij->zmin, zij->zmax, zij->zmax - zij->zmin);
          
          iz++;
       }
+      */
       
-      while (iz < vzijden.size() && vzijden[iz]->zmin <= v->z && vzijden[iz]->zmax <= v->z)
+      for (int iz = 0; iz < vzijden.size(); iz++)
       {
-         Zijde *zij = vzijden[iz];
-         zij->snijding = true;
-         printf("v %lf zmax ok  zijde zmin %lf zmax %lf df %lf\n", v->z, zij->zmin, zij->zmax, zij->zmax - zij->zmin);
-         iz++;
+         if (vzijden[iz]->zmin <= v->z && vzijden[iz]->zmax >= v->z)
+         {
+            Zijde *zij = vzijden[iz];
+            zij->snijding = true;
+            printf("v %lf zmax ok  zijde zmin %lf zmax %lf df %lf\n", v->z, zij->zmin, zij->zmax, zij->zmax - zij->zmin);
+            zij->berekensnijpunt(v);
+         }
       }
       
    }
