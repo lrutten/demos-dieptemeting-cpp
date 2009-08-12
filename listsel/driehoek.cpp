@@ -2,9 +2,9 @@
 #include "driehoek.h"
 #include "insprong.h"
 
-// $Date: 2006-05-27 20:55:43 $
-// $Author: lrutten $
-// $Revision: 1.1 $
+// $Date$
+// $Author$
+// $Revision$
 
 Driehoek::Driehoek(Punt *ip1, Punt *ip2, Punt *ip3) : p1(ip1), p2(ip2), p3(ip3)
 {

@@ -4,9 +4,9 @@
 //#include "moc_dieptemeting.h"
 #include "vaart.h"
 
-// $Date: 2006-05-27 20:55:43 $
-// $Author: lrutten $
-// $Revision: 1.1 $
+// $Date$
+// $Author$
+// $Revision$
 
 // dieptemeting met selectie in QListView
 

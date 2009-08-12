@@ -5,9 +5,9 @@
 #include <qpainter.h>
 #include "punt.h"
 
-// $Date: 2006-05-27 20:55:43 $
-// $Author: lrutten $
-// $Revision: 1.1 $
+// $Date$
+// $Author$
+// $Revision$
 
 
 class Driehoek

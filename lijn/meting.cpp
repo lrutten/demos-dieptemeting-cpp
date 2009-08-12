@@ -2,9 +2,9 @@
 #include "meting.h"
 #include "insprong.h"
 
-// $Date: 2008-12-02 09:59:55 $
-// $Author: lrutten $
-// $Revision: 1.2 $
+// $Date$
+// $Author$
+// $Revision$
 
 
 Meting::Meting()

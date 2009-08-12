@@ -3,9 +3,9 @@
 
 #include "punt.h"
 
-// $Date: 2003-12-16 12:18:48 $
-// $Author: lrutten $
-// $Revision: 1.1 $
+// $Date$
+// $Author$
+// $Revision$
 
 class Meting
 {

@@ -5,9 +5,9 @@
 #include "meting.h"
 #include "strook.h"
 
-// $Date: 2006-05-23 07:59:07 $
-// $Author: lrutten $
-// $Revision: 1.1 $
+// $Date$
+// $Author$
+// $Revision$
 
 
 class Vaart

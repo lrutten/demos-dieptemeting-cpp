@@ -2,9 +2,9 @@
 #include "vaart.h"
 #include "insprong.h"
 
-// $Date: 2008-12-03 16:12:40 $
-// $Author: lrutten $
-// $Revision: 1.5 $
+// $Date$
+// $Author$
+// $Revision$
 
 Vaart::Vaart()
 {

@@ -2,9 +2,9 @@
 #include "zijden.h"
 #include "insprong.h"
 
-// $Date: 2008-12-02 10:40:59 $
-// $Author: lrutten $
-// $Revision: 1.2 $
+// $Date$
+// $Author$
+// $Revision$
 
 
 Zijden::Zijden()

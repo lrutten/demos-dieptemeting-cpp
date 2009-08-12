@@ -13,9 +13,9 @@
 
 using namespace std;
 
-// $Date: 2008-12-04 16:30:27 $
-// $Author: lrutten $
-// $Revision: 1.3 $
+// $Date$
+// $Author$
+// $Revision$
 
 class Driehoek;
 

@@ -2,9 +2,9 @@
 #include "strook.h"
 #include "insprong.h"
 
-// $Date: 2006-05-23 07:59:07 $
-// $Author: lrutten $
-// $Revision: 1.1 $
+// $Date$
+// $Author$
+// $Revision$
 
 
 Strook::Strook(Meting *mm1, Meting *mm2)

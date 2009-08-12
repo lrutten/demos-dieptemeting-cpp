@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include "vaart.h"
 
-// $Date: 2006-05-29 10:55:45 $
-// $Author: lrutten $
-// $Revision: 1.3 $
+// $Date$
+// $Author$
+// $Revision$
 
 /*
   In deze versie wordt de vaart in een venster getoond

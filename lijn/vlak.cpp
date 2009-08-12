@@ -2,9 +2,9 @@
 #include "vlak.h"
 #include "insprong.h"
 
-// $Date: 2008-12-03 16:12:40 $
-// $Author: lrutten $
-// $Revision: 1.1 $
+// $Date$
+// $Author$
+// $Revision$
 
 
 Vlak::Vlak(double iz) : z(iz)

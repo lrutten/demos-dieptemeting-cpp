@@ -7,9 +7,9 @@
 #include "zijden.h"
 #include "dieptelijnen.h"
 
-// $Date: 2008-12-04 16:30:27 $
-// $Author: lrutten $
-// $Revision: 1.4 $
+// $Date$
+// $Author$
+// $Revision$
 
 
 class Driehoek

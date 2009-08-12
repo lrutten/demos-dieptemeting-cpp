@@ -8,9 +8,9 @@
 
 using namespace std;
 
-// $Date: 2008-12-03 16:12:40 $
-// $Author: lrutten $
-// $Revision: 1.4 $
+// $Date$
+// $Author$
+// $Revision$
 
 
 class Strook

@@ -4,9 +4,9 @@
 
 #include <algorithm>
 
-// $Date: 2008-12-04 16:30:27 $
-// $Author: lrutten $
-// $Revision: 1.4 $
+// $Date$
+// $Author$
+// $Revision$
 
 
 Dieptelijnen::Dieptelijnen(Vaart *v, double dz) : vaart(v), deltaz(dz)

@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include "vaart.h"
 
-// $Date: 2006-05-29 10:55:45 $
-// $Author: lrutten $
-// $Revision: 1.3 $
+// $Date$
+// $Author$
+// $Revision$
 
 // dieptemeting met QListView zonder selectie
 // De vaart, metingen en punten worden in een boomformaat weergegeven.

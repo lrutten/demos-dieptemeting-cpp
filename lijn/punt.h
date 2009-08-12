@@ -1,9 +1,9 @@
 #ifndef PUNT_H
 #define PUNT_H
 
-// $Date: 2008-11-28 15:20:56 $
-// $Author: lrutten $
-// $Revision: 1.1 $
+// $Date$
+// $Author$
+// $Revision$
 
 #include <qlistview.h>
 

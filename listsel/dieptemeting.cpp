@@ -8,9 +8,9 @@
 
 #include "dieptemeting.h"
 
-// $Date: 2006-05-29 10:55:45 $
-// $Author: lrutten $
-// $Revision: 1.2 $
+// $Date$
+// $Author$
+// $Revision$
 
 // Dieptemeting met selectie in QListView
 //

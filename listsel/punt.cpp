@@ -2,9 +2,9 @@
 #include "punt.h"
 #include "insprong.h"
 
-// $Date: 2006-05-27 20:55:43 $
-// $Author: lrutten $
-// $Revision: 1.1 $
+// $Date$
+// $Author$
+// $Revision$
 
 
 int Punt::teller = 0;

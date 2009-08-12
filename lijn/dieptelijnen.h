@@ -10,9 +10,9 @@
 
 using namespace std;
 
-// $Date: 2008-12-04 09:36:02 $
-// $Author: lrutten $
-// $Revision: 1.3 $
+// $Date$
+// $Author$
+// $Revision$
 
 class Vaart;
 
