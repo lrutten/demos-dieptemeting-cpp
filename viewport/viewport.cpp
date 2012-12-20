@@ -19,11 +19,6 @@ private:
    int bv;
    int hv;
 
-   // De afmeting van de figuur
-   // in venstercoordinaten.
-   int b;
-   int h;
-
    // window
    //  De afmetingen in wereldcoordinaten
    double xf;
