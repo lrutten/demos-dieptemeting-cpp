@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <iostream>
 #include "meting.h"
 #include "insprong.h"
 
@@ -20,7 +20,7 @@ void Meting::voegpuntbij(Punt *p)
 void Meting::toon(int d)
 {
    Insprong::springin(d);
-   printf("Meting\n");
+   cout << "Meting\n";
    for (int i = 0; i<npunten; i++)
    {
       punten[i]->toon(d + 1);

@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <iostream>
 #include "punt.h"
 #include "insprong.h"
 
@@ -17,5 +17,5 @@ Punt::Punt(double ix, double iy, double iz) : x(ix), y(iy), z(iz)
 void Punt::toon(int d)
 {
    Insprong::springin(d);
-   printf("Punt %d: %lf %lf %lf\n", nr, x, y, z);
+   cout << "Punt " << nr << ": " << x << " " << y << " " << z << "\n";
 }

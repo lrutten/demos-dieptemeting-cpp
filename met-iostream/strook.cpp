@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <iostream>
 #include "strook.h"
 #include "insprong.h"
 
@@ -22,7 +22,7 @@ void Strook::voegdriehoekbij(Driehoek *d)
 void Strook::toon(int d)
 {
    Insprong::springin(d);
-   printf("Strook\n");
+   cout << "Strook\n";
    for (int i = 0; i<ndriehoeken; i++)
    {
       driehoeken[i]->toon(d + 1);

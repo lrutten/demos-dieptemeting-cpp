@@ -6,7 +6,7 @@
 #include <qpainter.h>
 */
 
-#include <stdio.h>
+#include <iostream>
 #include <QtGui>
 #include "vaart.h"
 
@@ -100,19 +100,19 @@ void DVenster::paintEvent( QPaintEvent * )
     yv = r.top();
     bv = r.width();
     hv = r.height();
-    printf("viewport %d %d %d %d\n", xv, yv, bv, hv);
+    cout << "viewport " << xv << " " << yv << " " << bv << " " << hv << "\n";
 
     // haal de oorsprong, breedte en hoogte op van het kanaal
     xk = v->getminx();
     yk = v->getminy();
     bk = v->getmaxx() - v->getminx();
     hk = v->getmaxy() - v->getminy();
-    printf("window %lf %lf %lf %lf\n", xk, yk, bk, hk);
+    cout << "window " << xk << " " << yk << " " << bk << " " << hk << "\n";
 
     double av = ((double) hv)/bv;
     double ak = (v->getmaxy() - v->getminy())/(v->getmaxx() - v->getminx());
     
-    printf("aspectratio's window %lf  kanaal %lf\n", av, ak);
+    cout << "aspectratio's window " << av  << " kanaal " << ak << "\n";
     
     // stel in hoe de rechthoek waarbinnen geteken wordt,
     // zichtbaar wordt in het venster
@@ -159,7 +159,7 @@ void DVenster::mouseMoveEvent(QMouseEvent *ev)
 {
    int x = ev->x();
    int y = ev->y();
-   printf("mm %d %d\n", x, y);
+   cout << "mm " << x << y << "\n";
 
    int xx = (int) ((x - (double)((bv - b)/2.0))/hv*hk + xk);
    int yy = (int) ((y - (double)yv)/hv*hk + yk);
@@ -169,7 +169,7 @@ void DVenster::mouseMoveEvent(QMouseEvent *ev)
    if (xx < xk || yy < yk || 
        xx >= xk+bk || yy >= yk+hk)
    {
-      printf("buiten\n");
+      cout << "buiten\n";
       return;
    } 
    
