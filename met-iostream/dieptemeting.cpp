@@ -9,6 +9,7 @@
 #include <iostream>
 #include <QtGui>
 #include "vaart.h"
+#include "kleurpad.h"
 
 // $Date: 2011-12-14 15:46:31 +0100 (Wed, 14 Dec 2011) $
 // $Author: lrutten $
@@ -76,8 +77,8 @@ void DVenster::maakvaart()
    printf("start\n");
 
    v = new Vaart();
-//   v->leesbestand("OELG_B06.DAT");
-   v->leesbestand("DATA.DAT");
+   v->leesbestand("OELG_B06.DAT");
+//   v->leesbestand("DATA.DAT");
    v->maakstroken();
    v->berekenminmax();
 //   v->toon();
@@ -231,7 +232,7 @@ void Strook::teken(QPainter *qp, double minz, double maxz)
 }
 
 // teken een driehoek met een vulkleur volgens diepte
-
+/*
 void Driehoek::teken(QPainter *qp, double minz, double maxz)
 {
    int x1 = (int) p1->x;
@@ -272,11 +273,83 @@ void Driehoek::teken(QPainter *qp, double minz, double maxz)
    
    
    // teken gevulde driehoek
-/*
-   QPointArray pts;
-   pts.setPoints( 3,   x1, y1, x2, y2, x3, y3 );
-   qp->drawConvexPolygon( pts );
+
+   QPolygon polygon(3);
+   polygon.putPoints(0, 3, x1, y1, x2, y2, x3, y3);
+   qp->drawPolygon( polygon );
+
+   if (omuis || selectie)
+   {
+      if (omuis)
+      {
+         qp->setPen( QColor(0,0,0));
+      }
+      else
+      {
+         qp->setPen( QColor(255,0,0));
+      }
+         
+      // teken lijnen rond driehoek
+      qp->drawLine(x1, y1, x2, y2);
+      qp->drawLine(x2, y2, x3, y3);
+      qp->drawLine(x3, y3, x1, y1);
+   }
+}
 */
+
+void Driehoek::teken(QPainter *qp, double minz, double maxz)
+{
+   int x1 = (int) p1->x;
+   int y1 = (int) p1->y;
+   int x2 = (int) p2->x;
+   int y2 = (int) p2->y;
+   int x3 = (int) p3->x;
+   int y3 = (int) p3->y;
+   
+
+
+   // kleur voor de grootste diepte
+   int rmax = 0;
+   int gmax = 0;
+   int bmax = 255;
+   
+   // kleur voor de kleinste diepte
+   int rmin = 0;
+   int gmin = 255;
+   int bmin = 0;
+   
+   // bereken gemiddelde diepte
+   double z = (p1->z + p2->z + p3->z)/3.0;
+   
+   // u varieert van 0.0 (min. diepte) tot 1.0 (maximale diepte) 
+   double u = (z - minz)/(maxz - minz);
+
+   KleurPad *kp = new KleurPad();
+   kp->voegbij(new Kleur(0.0, rmin, gmin, bmin));
+   kp->voegbij(new Kleur(0.4,    0,  255,  255));
+   kp->voegbij(new Kleur(0.7,  255,    0,    0));
+   kp->voegbij(new Kleur(1.0, rmax, gmax, bmax));
+   kp->interpoleer(u);
+   int r = kp->getr();
+   int g = kp->getg();
+   int b = kp->getb();
+   delete kp;
+   
+   // dit is de interpolatie   
+   /*
+   int r = int (rmax * u + rmin * (1.0 - u));
+   int g = int (gmax * u + gmin * (1.0 - u));
+   int b = int (bmax * u + bmin * (1.0 - u));
+   */
+   
+   // stel de lijnkleur in
+   qp->setPen( QColor(r,g,b));
+   
+   // stel de vulkleur in
+   qp->setBrush( QColor(r,g,b));
+   
+   
+   // teken gevulde driehoek
 
    QPolygon polygon(3);
    polygon.putPoints(0, 3, x1, y1, x2, y2, x3, y3);
@@ -307,7 +380,7 @@ int main( int argc, char **argv )
     QApplication a( argc, argv );
 
     DVenster w;
-    w.setGeometry( 100, 100, 400, 300 );
+    w.setGeometry( 100, 100, 800, 600 );
     //a.setMainWidget( &w );
     w.show();
     return a.exec();
