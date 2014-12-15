@@ -1,9 +1,6 @@
-#include <qapplication.h>
-#include <qsplitter.h>
-#include <qlistview.h>
-#include <qpushbutton.h>
-#include <qfont.h>
-#include <qpainter.h>
+
+#include <QtGui>
+
 #include <stdio.h>
 #include "vaart.h"
 
@@ -11,13 +8,13 @@
 // $Author$
 // $Revision$
 
-// dieptemeting met QListView zonder selectie
+// dieptemeting met QTreeWidget zonder selectie
 // De vaart, metingen en punten worden in een boomformaat weergegeven.
 
 class DVenster : public QWidget
 {
 public:
-    DVenster( QWidget *parent=0, const char *name=0 );
+    DVenster( QWidget *parent=0 );
     void maakvaart();
     void maakboom();
     
@@ -29,8 +26,8 @@ private:
 };
 
 
-DVenster::DVenster( QWidget *parent, const char *name )
-        : QWidget( parent, name )
+DVenster::DVenster( QWidget *parent)
+        : QWidget( parent)
 {
    // setMinimumSize( 200, 120 );
    // setMaximumSize( 200, 120 );
@@ -42,22 +39,31 @@ DVenster::DVenster( QWidget *parent, const char *name )
 
 void DVenster::maakboom()
 {
-    QListView *lv = new QListView();
+   QTreeWidget *lv = new QTreeWidget();
    
-    // toon + of - teken
-    lv->setRootIsDecorated(true);
+   // toon + of - teken
+   //lv->setRootIsDecorated(true);
 
-    // Er worden 4 kolommen getoond.
-    // De eerste geeft de boom weer.
-    lv->addColumn("naam");
-    lv->addColumn("x");
-    lv->addColumn("y");
-    lv->addColumn("z");
+   // Er worden 4 kolommen getoond.
+   // De eerste geeft de boom weer.
+	QTreeWidgetItem* headerItem = new QTreeWidgetItem();
+	headerItem->setText(0,QString("naam"));
+	headerItem->setText(1,QString("x"));
+	headerItem->setText(2,QString("y"));
+	headerItem->setText(3,QString("Z"));
+	lv->setHeaderItem(headerItem);
 
-    // Maak alle items voor de boom.
-    v->maakitem(lv);
+   /*
+   lv->addColumn("naam");
+   lv->addColumn("x");
+   lv->addColumn("y");
+   lv->addColumn("z");
+   */
+   
+   // Maak alle items voor de boom.
+   v->maakitem(lv);
 
-    lv->show();
+   lv->show();
 }
 
 
@@ -126,7 +132,7 @@ void DVenster::paintEvent( QPaintEvent * )
     // hiermee stellen we de wereldcoordinaten in    
     p.setWindow(xk, yk, bk, hk);
     
-    
+  /*  
     // de vier hoekpunten
     int x1 = xk;
     int y1 = yk;
@@ -138,7 +144,7 @@ void DVenster::paintEvent( QPaintEvent * )
     int y4 = yk + hk;
     
     // diagonaal, alleen voor de test van viewport
-  /*  
+    
     p.drawLine(x1, y1, x3, y3);
     p.drawLine(x2, y2, x4, y4);
     
@@ -166,7 +172,7 @@ void DVenster::paintEvent( QPaintEvent * )
 void Vaart::teken(QPainter *qp, double minz, double maxz)
 {
    // teken alle stroken
-   for (int i=0; i<stroken.size(); i++)
+   for (unsigned int i=0; i<stroken.size(); i++)
    {
       stroken[i]->teken(qp, minz, maxz);
    }
@@ -176,7 +182,7 @@ void Vaart::teken(QPainter *qp, double minz, double maxz)
 void Strook::teken(QPainter *qp, double minz, double maxz)
 {
    // teken alle driehoeken
-   for (int i=0; i<driehoeken.size(); i++)
+   for (unsigned int i=0; i<driehoeken.size(); i++)
    {
       driehoeken[i]->teken(qp, minz, maxz);
    }
@@ -229,15 +235,15 @@ void Driehoek::teken(QPainter *qp, double minz, double maxz)
    
    
    // teken gevulde driehoek
-   QPointArray pts;
-   pts.setPoints( 3,   x1, y1, x2, y2, x3, y3 );
-   qp->drawConvexPolygon( pts );
+   QPolygon polygon(3);
+   polygon.putPoints(0,  3, x1, y1, x2, y2, x3, y3 );
+   qp->drawPolygon( polygon );
 }
 
 
 void Dieptelijnen::teken(QPainter *qp)
 {
-   for (int iz=0; iz < vzijden.size(); iz++)
+   for (unsigned int iz=0; iz < vzijden.size(); iz++)
    {
       Zijde *zz = vzijden[iz];
       /*
@@ -281,27 +287,29 @@ void Dieptelijnen::teken(QPainter *qp)
 
 // Een item voor Vaart bevat alle items voor de metingen.
 
-QListViewItem *Vaart::maakitem(QListView *parent)
+QTreeWidgetItem *Vaart::maakitem(QTreeWidget *parent)
 {
-   QListViewItem *it = new QListViewItem(parent, "vaart");
-
-   for (int i=0; i<metingen.size(); i++)
+   QTreeWidgetItem *it = new QTreeWidgetItem(parent);
+   it->setText(0, "Vaart");
+   
+   for (unsigned int i=0; i<metingen.size(); i++)
    {
-      QListViewItem *itk = metingen[i]->maakitem(it);
-      it->insertItem(itk);
+      QTreeWidgetItem *itk = metingen[i]->maakitem(it);
+      it->addChild(itk);
    }
    return it;
 }
 
 
 // Een item voor Meting bevat alle items voor de punten.
-QListViewItem *Meting::maakitem(QListViewItem *parent)
+QTreeWidgetItem *Meting::maakitem(QTreeWidgetItem *parent)
 {
-   QListViewItem *it = new QListViewItem(parent, "Meting");
-   for (int i=0; i<punten.size(); i++)
+   QTreeWidgetItem *it = new QTreeWidgetItem(parent);
+   it->setText(0, "Meting");
+   for (unsigned int i=0; i<punten.size(); i++)
    {
-      QListViewItem *itk = punten[i]->maakitem(it);
-      it->insertItem(itk);
+      QTreeWidgetItem *itk = punten[i]->maakitem(it);
+      it->addChild(itk);
    }
    return it;
 }
@@ -309,7 +317,7 @@ QListViewItem *Meting::maakitem(QListViewItem *parent)
 
 // Hier wordt een item voor een Punt gemaakt.
 
-QListViewItem *Punt::maakitem(QListViewItem *parent)
+QTreeWidgetItem *Punt::maakitem(QTreeWidgetItem *parent)
 {
    char bn[50];
    char bx[50];
@@ -323,8 +331,12 @@ QListViewItem *Punt::maakitem(QListViewItem *parent)
    sprintf(bz,"%lf", z);
 
    // Maak het item
-   QListViewItem *it = new QListViewItem(parent, bn, bx, by, bz);
-
+   QTreeWidgetItem *it = new QTreeWidgetItem(parent);
+   it->setText(0, bn);
+   it->setText(1, bx);
+   it->setText(2, by);
+   it->setText(3, bz);
+   
    return it;
 }
 
@@ -335,29 +347,29 @@ int main( int argc, char **argv )
 
     DVenster *w = new DVenster();
     w->setGeometry( 100, 100, 400, 300 );
-    a.setMainWidget( w );
+    //a.setMainWidget( w );
     w->show();
 /*
     Dit fragment was nodig om te experimenteren
-    met QListView en QListViewItem
+    met QTreeWidget en QTreeWidgetItem
 
     QSplitter *spl = new QSplitter(Qt::Vertical);
-    QListView *lv = new QListView(spl);
+    QTreeWidget *lv = new QTreeWidget(spl);
     lv->setRootIsDecorated(true);
     lv->addColumn("naam");
     lv->addColumn("x");
 
-    QListViewItem *it = new QListViewItem(lv, "een");
+    QTreeWidgetItem *it = new QTreeWidgetItem(lv, "een");
 
-    it->insertItem(new QListViewItem(it, "twee"));
-    it->insertItem(new QListViewItem(it, "drie"));
-    it->insertItem(new QListViewItem(it, "vier"));
+    it->insertItem(new QTreeWidgetItem(it, "twee"));
+    it->insertItem(new QTreeWidgetItem(it, "drie"));
+    it->insertItem(new QTreeWidgetItem(it, "vier"));
 
-    QListViewItem *it2 = new QListViewItem(lv, "vijf");
+    QTreeWidgetItem *it2 = new QTreeWidgetItem(lv, "vijf");
 
-    it2->insertItem(new QListViewItem(it2, "zes"));
-    it2->insertItem(new QListViewItem(it2, "zeven"));
-    it2->insertItem(new QListViewItem(it2, "acht"));
+    it2->insertItem(new QTreeWidgetItem(it2, "zes"));
+    it2->insertItem(new QTreeWidgetItem(it2, "zeven"));
+    it2->insertItem(new QTreeWidgetItem(it2, "acht"));
 
     it->setExpandable(true);
     it2->setExpandable(true);

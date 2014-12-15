@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include <qlistview.h>
+#include <QtGui>
 #include "punt.h"
 
 using namespace std;
@@ -25,7 +25,7 @@ public:
    Meting();
    void voegpuntbij(Punt *p);
    void toon(int d = 0);
-   QListViewItem *maakitem(QListViewItem *parent);
+   QTreeWidgetItem *maakitem(QTreeWidgetItem *parent);
 
    double berekenminx();
    double berekenmaxx();

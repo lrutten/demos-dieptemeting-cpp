@@ -22,7 +22,7 @@ void Meting::toon(int d)
 {
    Insprong::springin(d);
    printf("Meting\n");
-   for (int i = 0; i<punten.size(); i++)
+   for (unsigned int i = 0; i<punten.size(); i++)
    {
       punten[i]->toon(d + 1);
    }
@@ -34,7 +34,7 @@ double Meting::berekenminx()
    
    min = punten[0]->x;
    
-   for (int i=1; i<punten.size(); i++)
+   for (unsigned int i=1; i<punten.size(); i++)
    {
       if (punten[i]->x < min)
       {
@@ -50,7 +50,7 @@ double Meting::berekenmaxx()
    
    max = punten[0]->x;
    
-   for (int i=1; i<punten.size(); i++)
+   for (unsigned int i=1; i<punten.size(); i++)
    {
       if (punten[i]->x > max)
       {
@@ -66,7 +66,7 @@ double Meting::berekenminy()
    
    min = punten[0]->y;
    
-   for (int i=1; i<punten.size(); i++)
+   for (unsigned int i=1; i<punten.size(); i++)
    {
       if (punten[i]->y < min)
       {
@@ -82,7 +82,7 @@ double Meting::berekenmaxy()
    
    max = punten[0]->y;
    
-   for (int i=1; i<punten.size(); i++)
+   for (unsigned int i=1; i<punten.size(); i++)
    {
       if (punten[i]->y > max)
       {
@@ -98,7 +98,7 @@ double Meting::berekenminz()
    
    min = punten[0]->z;
    
-   for (int i=1; i<punten.size(); i++)
+   for (unsigned int i=1; i<punten.size(); i++)
    {
       if (punten[i]->z < min)
       {
@@ -114,7 +114,7 @@ double Meting::berekenmaxz()
    
    max = punten[0]->z;
    
-   for (int i=1; i<punten.size(); i++)
+   for (unsigned int i=1; i<punten.size(); i++)
    {
       if (punten[i]->z > max)
       {

@@ -5,7 +5,7 @@
 // $Author$
 // $Revision$
 
-#include <qlistview.h>
+#include <QtGui>
 
 class Punt
 {
@@ -21,7 +21,7 @@ public:
    
    Punt(double ix, double iy, double iz);
    void toon(int d = 0);
-   QListViewItem *maakitem(QListViewItem *parent);
+   QTreeWidgetItem *maakitem(QTreeWidgetItem *parent);
 };
 
 #endif

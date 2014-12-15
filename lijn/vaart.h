@@ -3,8 +3,7 @@
 
 #include <vector>
 
-#include <qpainter.h>
-#include <qlistview.h>
+#include <QtGui>
 
 #include "alles.h"
 
@@ -46,14 +45,14 @@ public:
    void voegmetingbij(Meting *m);
    void voegstrookbij(Strook *m);
    void toon(int d = 0);
-   void leesbestand(char *naam);
+   void leesbestand(const char *naam);
    int isleeg(char *bf);
    void maakstroken();
    void maakdieptelijnen();
    void berekenminmax();
    void teken(QPainter *qp, double minz, double maxz);
-   QListViewItem *maakitem(QListView *parent);
-   void dumpobj(char * bestand);
+   QTreeWidgetItem *maakitem(QTreeWidget *parent);
+   void dumpobj(const char * bestand);
  
    double getminx()
    {

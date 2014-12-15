@@ -62,16 +62,16 @@ void Vaart::toon(int d)
    dieptelijnen->toon(d + 1);
 }
 
-void Vaart::dumpobj(char *bestand)
+void Vaart::dumpobj(const char *bestand)
 {
    FILE *fp = fopen(bestand, "w");
    if (fp != NULL)
    {
       // dump alle punten
-      for (int im=0; im < metingen.size(); im++)
+      for (unsigned int im=0; im < metingen.size(); im++)
       {
          Meting *m = metingen[im];
-         for (int ip=0; ip<m->punten.size(); ip++)
+         for (unsigned int ip=0; ip<m->punten.size(); ip++)
          {
             Punt *p = m->punten[ip];
             fprintf(fp, "v %lf %lf %lf\n", p->x, p->y, p->z);
@@ -79,10 +79,10 @@ void Vaart::dumpobj(char *bestand)
       }
 
       // dump alle driehoeken
-      for (int is=0; is < stroken.size(); is++)
+      for (unsigned int is=0; is < stroken.size(); is++)
       {
          Strook *s = stroken[is];
-         for (int id=0; id < s->driehoeken.size(); id++)
+         for (unsigned int id=0; id < s->driehoeken.size(); id++)
          {
             Driehoek *d = s->driehoeken[id];
             fprintf(fp,"f %d %d %d\n", d->p1->nr, d->p2->nr, d->p3->nr); 
@@ -115,7 +115,7 @@ int Vaart::isleeg(char *bf)
 
 // deze functie is overgenomen van Jo Vliegen
 
-void Vaart::leesbestand(char *naam)
+void Vaart::leesbestand(const char *naam)
 {
 	char buf[1000];
 	FILE *f;
@@ -166,7 +166,7 @@ void Vaart::leesbestand(char *naam)
 
 void Vaart::maakstroken()
 {
-   for (int im = 0; im < metingen.size() - 1; im++)
+   for (unsigned int im = 0; im < metingen.size() - 1; im++)
    {
       Meting *m1 = metingen[im];
       Meting *m2 = metingen[im + 1];
@@ -174,7 +174,7 @@ void Vaart::maakstroken()
       Strook *s = new Strook();
       voegstrookbij(s);
       
-      for (int ip = 0; ip < m1->punten.size() - 1; ip++)
+      for (unsigned int ip = 0; ip < m1->punten.size() - 1; ip++)
       {
          Punt *p1 = m1->punten[ip];
          Punt *p2 = m1->punten[ip + 1];
@@ -196,7 +196,7 @@ void Vaart::maakstroken()
 void Vaart::berekenminmax()
 {
    minx = metingen[0]->berekenminx();
-   for (int i = 1; i<metingen.size(); i++)
+   for (unsigned int i = 1; i<metingen.size(); i++)
    {
       double temp = metingen[i]->berekenminx();
       
@@ -207,7 +207,7 @@ void Vaart::berekenminmax()
    }
 
    maxx = metingen[0]->berekenmaxx();
-   for (int i = 1; i<metingen.size(); i++)
+   for (unsigned int i = 1; i<metingen.size(); i++)
    {
       double temp = metingen[i]->berekenmaxx();
       
@@ -218,7 +218,7 @@ void Vaart::berekenminmax()
    }
 
    miny = metingen[0]->berekenminy();
-   for (int i = 1; i<metingen.size(); i++)
+   for (unsigned int i = 1; i<metingen.size(); i++)
    {
       double temp = metingen[i]->berekenminy();
       
@@ -229,7 +229,7 @@ void Vaart::berekenminmax()
    }
 
    maxy = metingen[0]->berekenmaxy();
-   for (int i = 1; i<metingen.size(); i++)
+   for (unsigned int i = 1; i<metingen.size(); i++)
    {
       double temp = metingen[i]->berekenmaxy();
       
@@ -241,7 +241,7 @@ void Vaart::berekenminmax()
    
    
    minz = metingen[0]->berekenminz();
-   for (int i = 1; i<metingen.size(); i++)
+   for (unsigned int i = 1; i<metingen.size(); i++)
    {
       double temp = metingen[i]->berekenminz();
       
@@ -252,7 +252,7 @@ void Vaart::berekenminmax()
    }
 
    maxz = metingen[0]->berekenmaxz();
-   for (int i = 1; i<metingen.size(); i++)
+   for (unsigned int i = 1; i<metingen.size(); i++)
    {
       double temp = metingen[i]->berekenmaxz();
       
