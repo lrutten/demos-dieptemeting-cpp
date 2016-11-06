@@ -73,7 +73,7 @@ void DVenster::maakvaart()
 
    v = new Vaart();
    v->leesbestand("OELG_B06.DAT");
-//   v->leesbestand("DATA.DAT");
+   //v->leesbestand("DATA.DAT");
    v->maakstroken();
    v->berekenminmax();
    v->maakdieptelijnen();
@@ -238,11 +238,39 @@ void Driehoek::teken(QPainter *qp, double minz, double maxz)
    QPolygon polygon(3);
    polygon.putPoints(0,  3, x1, y1, x2, y2, x3, y3 );
    qp->drawPolygon( polygon );
+   
+   vector<Punt *> snijpunten;
+   if (z12->snijpunt != NULL)
+   {
+      snijpunten.push_back(z12->snijpunt);
+   }
+   if (z23->snijpunt != NULL)
+   {
+      snijpunten.push_back(z23->snijpunt);
+   }
+   if (z31->snijpunt != NULL)
+   {
+      snijpunten.push_back(z31->snijpunt);
+   }
+   
+   if (snijpunten.size() == 2)
+   {
+      
+         int x1 = (int) snijpunten[0]->x;
+         int y1 = (int) snijpunten[0]->y;
+         int x2 = (int) snijpunten[1]->x;
+         int y2 = (int) snijpunten[1]->y;
+         
+         qp->setPen( QColor(0,0,0));
+         qp->drawLine(x1, y1, x2, y2);
+   }
 }
 
 
 void Dieptelijnen::teken(QPainter *qp)
 {
+   const int hoogte_streepje = 2;
+   
    for (unsigned int iz=0; iz < vzijden.size(); iz++)
    {
       Zijde *zz = vzijden[iz];
@@ -264,7 +292,7 @@ void Dieptelijnen::teken(QPainter *qp)
          int y1 = (int) zz->snijpunt->y;
          
          qp->setPen( QColor(0,0,0));
-         qp->drawLine(x1, y1, x1, y1+5);
+         qp->drawLine(x1, y1, x1, y1+hoogte_streepje);
       }
       else
       if (zz->snijvlak != NULL)

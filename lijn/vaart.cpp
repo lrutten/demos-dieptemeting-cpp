@@ -148,13 +148,17 @@ void Vaart::leesbestand(const char *naam)
 		sscanf(&buf[25],"%f",&x);xx=(int)(x*10000);
 		sscanf(&buf[34],"%f",&y);yy=(int)(y*10000);
 
+		// test n = 10;
 		for(i=0;i<n;i++)
 		{
 			sscanf(&buf[42+(i*4)],"%d",&temp);
          //printf("z %d\n", temp);
 
-			Punt *p = new Punt(xx,yy+i*SENSORBREEDTE,temp*ZFACTOR);
-			m->voegpuntbij(p);
+			// test if (i > 2)
+			// test {
+			   Punt *p = new Punt(xx*10,yy+i*SENSORBREEDTE,temp*ZFACTOR);
+			   m->voegpuntbij(p);
+			// test }
 		}
 
 		voegmetingbij(m);
