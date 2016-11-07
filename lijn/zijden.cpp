@@ -2,7 +2,7 @@
 #include "zijden.h"
 #include "insprong.h"
 
-// $Date$
+// 7/11/2016
 // $Author$
 // $Revision$
 
@@ -10,13 +10,6 @@
 Zijden::Zijden()
 {
 }
-
-/*
-void Zijden::voegzijdebij(Zijde *z)
-{
-   zijden.push_back(z);  
-}
-*/
 
 void Zijden::voegdriehoekbij(Driehoek *d)
 {
@@ -51,55 +44,28 @@ Zijde *Zijden::voegzijdebij(Punt *p1, Punt *p2)
       return z;
    }
    z = new Zijde(p1, p2);
-   zijden[p1][p2] = z;
+   zijden[std::pair<Punt *, Punt *>(p1, p2)] = z;
    return z;
 }
 
 
 /*
-  Zoek een zijde in de dubbele map
+  Zoek een zijde in de map
  */
 
 Zijde *Zijden::zoek(Punt *p1, Punt *p2)
 {
-   map<Punt *, map<Punt *, Zijde *> >::iterator it1 = zijden.find(p1);
-   if (it1 != zijden.end())
+   std::pair<Punt *, Punt *> paar(p1, p2);
+   
+   std::map<std::pair<Punt *, Punt *>, Zijde *>::iterator it = zijden.find(paar);
+   if (it != zijden.end())
    {
       //printf("p1a gevonden\n");
-      map<Punt *, Zijde *> map2 = (*it1).second;
-      map<Punt *, Zijde *>::iterator it2 = map2.find(p2);
-      if (it2 != map2.end())
-      {
-         //printf("p2a gevonden\n");
-         return (*it2).second;
-      }
-      else
-      {
-         return NULL;
-      }
+      return (*it).second;
    }
    else
    {
-      it1 = zijden.find(p2);
-      if (it1 != zijden.end())
-      {
-         //printf("p2b gevonden\n");
-         map<Punt *, Zijde *> map2 = (*it1).second;
-         map<Punt *, Zijde *>::iterator it2 = map2.find(p1);
-         if (it2 != map2.end())
-         {
-            //printf("p1b gevonden\n");
-            return (*it2).second;
-         }
-         else
-         {
-            return NULL;
-         }
-      }
-      else
-      {
-         return NULL;
-      }
+      return NULL;
    }
 }
 
@@ -108,22 +74,16 @@ void Zijden::toon(int d)
    Insprong::springin(d);
    printf("Zijden\n");
 
-   map<Punt *, map<Punt *, Zijde *> >::iterator ir= zijden.begin();
-   while (ir != zijden.end())
+   std::map<std::pair<Punt *, Punt *>, Zijde *>::iterator it= zijden.begin();
+   while (it != zijden.end())
    {
-      Punt *p = (*ir).first;
-      p->toon(d+1);
-      map<Punt *, Zijde *>::iterator ik = (*ir).second.begin();
-      while (ik != (*ir).second.end())
-      {
-         Punt *q = (*ik).first;
-         q->toon(d+2);
-         Zijde *z = (*ik).second;
-         z->toon(d+3);
-
-         ik++;
-      }
-      ir++;
+      Punt *p1 = (*it).first.first;
+      p1->toon(d+1);
+      Punt *p2 = (*it).first.second;
+      p2->toon(d+1);
+      Zijde *z = (*it).second;
+      z->toon(d+2);
+      it++;
    }
 }
 

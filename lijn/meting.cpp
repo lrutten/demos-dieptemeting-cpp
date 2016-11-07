@@ -1,27 +1,24 @@
-#include <stdio.h>
+#include <iostream>
 #include "meting.h"
 #include "insprong.h"
 
-// $Date$
-// $Author$
-// $Revision$
+// 7/11/2016
+// L. Rutten
 
 
 Meting::Meting()
 {
-   //npunten = 0;
 }
 
 void Meting::voegpuntbij(Punt *p)
 {
-   //punten[npunten++] = p;  
    punten.push_back(p);
 }
 
 void Meting::toon(int d)
 {
    Insprong::springin(d);
-   printf("Meting\n");
+   std::cout << "Meting\n";
    for (unsigned int i = 0; i<punten.size(); i++)
    {
       punten[i]->toon(d + 1);
@@ -123,6 +120,3 @@ double Meting::berekenmaxz()
    }
    return max;
 }
-
-
-

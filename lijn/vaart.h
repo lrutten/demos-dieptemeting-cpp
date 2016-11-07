@@ -14,11 +14,8 @@
 #include "zijden.h"
 #include "dieptelijnen.h"
 
-using namespace std;
-
-// $Date$
-// $Author$
-// $Revision$
+// 7/11/2016
+// L. Rutten
 
 class Dieptelijnen;
 class Strook;
@@ -28,8 +25,8 @@ class Vaart
 friend class Dieptelijnen;
 
 private:
-   vector<Meting *> metingen;
-   vector<Strook *> stroken;
+   std::vector<Meting *> metingen;
+   std::vector<Strook *> stroken;
    Dieptelijnen    *dieptelijnen;
    
    double minx;

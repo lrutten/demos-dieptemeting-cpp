@@ -1,10 +1,9 @@
-#include <stdio.h>
+#include <iostream>
 #include "zijde.h"
 #include "insprong.h"
 
-// $Date$
-// $Author$
-// $Revision$
+// 7/11/2016
+// L. Rutten
 
 int Zijde::teller = 0;
 
@@ -34,7 +33,7 @@ Zijde::Zijde(Punt *ip1, Punt *ip2) : p1(ip1), p2(ip2)
 void Zijde::toon(int d)
 {
    Insprong::springin(d);
-   printf("Zijde %d\n", nr);
+   std::cout << "Zijde " << nr << "\n";
    p1->toon(d + 1);
    p2->toon(d + 1);
 }
@@ -50,7 +49,7 @@ void Zijde::berekensnijpunt(Vlak *v)
       {
          snijding = true;
          snijvlak = v;
-         printf("u %lf\n", u);
+         std::cout << "u " << u << "\n";
          
          double x = (1.0 - u)*p1->x + u*p2->x;
          double y = (1.0 - u)*p1->y + u*p2->y;
@@ -58,14 +57,14 @@ void Zijde::berekensnijpunt(Vlak *v)
       }
       else
       {
-         printf("u buiten bereik");
+         std::cout << "u buiten bereik\n";
       }
    }
    else
    {
       snijding = true;
       snijvlak = v;
-      printf("deling door 0\n");
+      std::cout << "deling door 0\n";
    }
 }
 

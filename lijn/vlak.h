@@ -6,12 +6,9 @@
 #include <qpainter.h>
 #include "driehoek.h"
 
-using namespace std;
 
-// $Date$
-// $Author$
-// $Revision$
-
+// 7/11/2016
+// L. Rutten
 
 class Vlak
 {

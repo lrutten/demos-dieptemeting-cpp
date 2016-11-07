@@ -1,13 +1,11 @@
-#include <stdio.h>
+#include <iostream>
 #include "dieptelijnen.h"
 #include "insprong.h"
 
 #include <algorithm>
 
-// $Date$
-// $Author$
-// $Revision$
-
+// 7/11/2016
+// L. Rutten
 
 Dieptelijnen::Dieptelijnen(Vaart *v, double dz) : vaart(v), deltaz(dz)
 {
@@ -18,12 +16,12 @@ Dieptelijnen::Dieptelijnen(Vaart *v, double dz) : vaart(v), deltaz(dz)
 void Dieptelijnen::toon(int d)
 {
    Insprong::springin(d);
-   printf("Dieptelijnen\n");
+   cout << "Dieptelijnen\n";
    //zijden->toon(d + 1);
    
    Insprong::springin(d + 1);
-   printf("Vlakken\n");
-   for (int iv=0; iv < vlakken.size(); iv++)
+   cout << "Vlakken\n";
+   for (unsigned int iv=0; iv < vlakken.size(); iv++)
    {
       vlakken[iv]->toon(d + 2);
    }
@@ -37,13 +35,13 @@ void Dieptelijnen::maakdieptelijnen()
 
 void Dieptelijnen::maakzijden()
 {
-   printf("Dieptelijnen::maakzijden()\n");
+   cout << "Dieptelijnen::maakzijden()\n";
  
-   for (int is=0; is < vaart->stroken.size(); is++)
+   for (unsigned int is=0; is < vaart->stroken.size(); is++)
    {
       Strook *s = vaart->stroken[is];
       
-      for (int id=0; id <s->driehoeken.size(); id++)
+      for (unsigned int id=0; id <s->driehoeken.size(); id++)
       {
          Driehoek *d = s->driehoeken[id];
          zijden->voegdriehoekbij(d);
@@ -59,11 +57,11 @@ bool cmp(const Zijde *a, const Zijde *b)
 
 void Dieptelijnen::maakvlakken()
 {
-   printf("Dieptelijnen::maakvlakken()\n");
-   printf("deltaz %lf\n", deltaz);
-   printf("zmin   %lf\n", vaart->minz);
-   printf("zmax   %lf\n", vaart->maxz);
-   
+   cout << "Dieptelijnen::maakvlakken()\n";
+   cout << "deltaz " << deltaz << "\n";
+   cout << "zmin   " << vaart->minz << "\n";
+   cout << "zmax   " << vaart->maxz << "\n";
+ 
    int dz  = (int) deltaz;
    int miz = (int) vaart->minz;
    int maz = (int) vaart->maxz;
@@ -72,7 +70,7 @@ void Dieptelijnen::maakvlakken()
    
    int   t = dz;
    int zmi = miz/dz;
-   printf("%d * %d\n", zmi, t);
+   cout << zmi << " * " << t << "\n";
 
        zmi *= t;
          t = dz;
@@ -83,54 +81,51 @@ void Dieptelijnen::maakvlakken()
    }
    zma *= t;
 
-   printf("dz    %d\n", dz);
-   printf("zmi   %d\n", zmi);
-   printf("zma   %d\n", zma);
+   cout << "dz    " << dz  << "\n"; 
+   cout << "zmi   " << zmi << "\n";
+   cout << "zma   " << zma << "\n";
    
    int z = zmi;
    while (z <= zma)
    {
-      printf("z %d\n", z);
+      cout << "z " << z << "\n";
       Vlak *v = new Vlak(z);
       vlakken.push_back(v);
       z += dz;
    }
 
    // overloop alle zijden
-   map<Punt *, map<Punt *, Zijde *> >::iterator ir= zijden->zijden.begin();
-   while (ir != zijden->zijden.end())
+   std::map<std::pair<Punt *, Punt *>, Zijde *>::iterator it= zijden->zijden.begin();
+   while (it != zijden->zijden.end())
    {
-      //Punt *p = (*ir).first;
-      map<Punt *, Zijde *>::iterator ik = (*ir).second.begin();
-      while (ik != (*ir).second.end())
-      {
-         //Punt *q = (*ik).first;
-         Zijde *zz = (*ik).second;
-         //zz->toon(0);
+      //Punt *p = (*it).first.first;
+      //Punt *q = (*it).first.second;
+      Zijde *zz = (*it).second;
+      //zz->toon(0);
          
-         // kopieer de zijde naar de vector
-         vzijden.push_back(zz);
-         ik++;
-      }
-      ir++;
+      // kopieer de zijde naar de vector
+      vzijden.push_back(zz);
+      it++;
    }
 
    // sorteer de lijst
    std::sort(vzijden.begin(), vzijden.end(), cmp);
-      
-   for (int i=0; i<vzijden.size(); i++)
+   
+   /*
+   for (unsigned int i=0; i<vzijden.size(); i++)
    {
       Zijde *zij = vzijden[i];
-      //printf("zijde zmin %lf zmax %lf df %lf\n", zij->zmin, zij->zmax, zij->zmax - zij->zmin);
+      printf("zijde zmin %lf zmax %lf df %lf\n", zij->zmin, zij->zmax, zij->zmax - zij->zmin);
    }
+    */
    
    // overloop alle vlakken
    // en tegelijkertijd de zijden
    //int iz = 0;
-   for (int iv=0; iv < vlakken.size(); iv++)
+   for (unsigned int iv=0; iv < vlakken.size(); iv++)
    {
       Vlak *v = vlakken[iv];
-      printf("vlak z %lf\n", v->z);
+      cout << "vlak z " << v->z << "\n";
       
       // sla de zijden met een te lage z over
       /*
@@ -143,17 +138,17 @@ void Dieptelijnen::maakvlakken()
       }
       */
       
-      for (int iz = 0; iz < vzijden.size(); iz++)
+      for (unsigned int iz = 0; iz < vzijden.size(); iz++)
       {
          if (vzijden[iz]->zmin <= v->z && vzijden[iz]->zmax >= v->z)
          {
             Zijde *zij = vzijden[iz];
             zij->snijding = true;
-            printf("v %lf zmax ok  zijde zmin %lf zmax %lf df %lf\n", v->z, zij->zmin, zij->zmax, zij->zmax - zij->zmin);
+            cout << "v "   << v->z << "zmax ok  zijde zmin " << zij->zmin << " zmax " << zij->zmax 
+                 << " df " << (zij->zmax - zij->zmin) << "\n";
             zij->berekensnijpunt(v);
          }
       }
-      
    }
 }
 

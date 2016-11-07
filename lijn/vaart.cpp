@@ -1,10 +1,11 @@
+#include <iostream>
 #include <stdio.h>
+
 #include "vaart.h"
 #include "insprong.h"
 
-// $Date$
-// $Author$
-// $Revision$
+// 7/11/2016
+// L. Rutten
 
 Vaart::Vaart()
 {
@@ -31,22 +32,22 @@ void Vaart::voegstrookbij(Strook *s)
 void Vaart::toon(int d)
 {
    Insprong::springin(d);
-   printf("Vaart\n");
+   cout << "Vaart\n";
 
    Insprong::springin(d);
-   printf("minx %lf\n", minx);
+   cout << "minx " << minx << "\n";
    Insprong::springin(d);
-   printf("maxx %lf\n", maxx);
+   cout << "maxx " << maxx << "\n";
 
    Insprong::springin(d);
-   printf("miny %lf\n", miny);
+   cout << "miny " << miny << "\n";
    Insprong::springin(d);
-   printf("maxy %lf\n", maxy);
+   cout << "maxy " << maxy << "\n";
 
    Insprong::springin(d);
-   printf("minz %lf\n", minz);
+   cout << "minz " << minz << "\n";
    Insprong::springin(d);
-   printf("maxz %lf\n", maxz);
+   cout << "maxz " << maxz << "\n";
 
 
    /*

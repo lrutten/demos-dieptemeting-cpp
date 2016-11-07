@@ -6,20 +6,15 @@
 #include <QtGui>
 #include "punt.h"
 
-using namespace std;
-
-// $Date$
-// $Author$
-// $Revision$
+// 7/11/2016
+// L. Rutten
 
 class Meting
 {
 friend class Vaart;
    
 private:
-   //int npunten;
-   //Punt *punten[50];
-   vector<Punt *> punten;
+   std::vector<Punt *> punten;
    
 public:
    Meting();

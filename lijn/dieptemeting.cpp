@@ -1,15 +1,15 @@
 
 #include <QtGui>
 
-#include <stdio.h>
+#include <iostream>
 #include "vaart.h"
 
-// $Date$
-// $Author$
-// $Revision$
+// 7/11/2016
+// L. Rutten
 
 // dieptemeting met QTreeWidget zonder selectie
 // De vaart, metingen en punten worden in een boomformaat weergegeven.
+// En de dieptelijnen worden getoond.
 
 class DVenster : public QWidget
 {
@@ -99,19 +99,19 @@ void DVenster::paintEvent( QPaintEvent * )
     int yv = r.top();
     int bv = r.width();
     int hv = r.height();
-    printf("viewport %d %d %d %d\n", xv, yv, bv, hv);
+    cout << "viewport " << xv << " " << yv << " " << bv << " " << hv << "\n";
 
     // haal de oorsprong, breedte en hoogte op van het kanaal
     int xk = (int) v->getminx();
     int yk = (int) v->getminy();
     int bk = (int) (v->getmaxx() - v->getminx());
     int hk = (int) (v->getmaxy() - v->getminy());
-    printf("window %d %d %d %d\n", xk, yk, bk, hk);
+    cout << "window " << xk << " " << yk << " " << bk << " " << hk << "\n";
 
     double av = ((double) hv)/bv;
     double ak = (v->getmaxy() - v->getminy())/(v->getmaxx() - v->getminx());
     
-    printf("aspectratio's window %lf  kanaal %lf\n", av, ak);
+    cout << "aspectratio's window " << av << " kanaal " << ak << "\n";
     
     // stel in hoe de rechthoek waarbinnen geteken wordt,
     // zichtbaar wordt in het venster

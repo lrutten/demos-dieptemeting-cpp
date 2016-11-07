@@ -6,12 +6,9 @@
 #include <qpainter.h>
 #include "driehoek.h"
 
-using namespace std;
 
-// $Date$
-// $Author$
-// $Revision$
-
+// 7/11/2016
+// L. Rutten
 
 class Strook
 {
@@ -19,7 +16,7 @@ friend class Vaart;
 friend class Dieptelijnen;
 
 private:
-   vector<Driehoek *> driehoeken;
+   std::vector<Driehoek *> driehoeken;
    
 public:
    Strook();
