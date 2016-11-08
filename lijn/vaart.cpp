@@ -1,4 +1,5 @@
 #include <iostream>
+#include <future>
 #include <stdio.h>
 
 #include "vaart.h"
@@ -169,6 +170,59 @@ void Vaart::leesbestand(const char *naam)
 }
 
 
+Strook *Vaart::maakstrook(Meting *m1, Meting *m2)
+{
+   Strook *s = new Strook();
+   voegstrookbij(s);
+   
+   for (unsigned int ip = 0; ip < m1->punten.size() - 1; ip++)
+   {
+      Punt *p1 = m1->punten[ip];
+      Punt *p2 = m1->punten[ip + 1];
+      Punt *p3 = m2->punten[ip + 1];
+      Punt *p4 = m2->punten[ip];
+      
+      Driehoek *d1 = new Driehoek(p1, p2, p4);
+      Driehoek *d2 = new Driehoek(p2, p3, p4);
+
+      s->voegdriehoekbij(d1);
+      s->voegdriehoekbij(d2);
+   }
+   return s;
+}
+
+/*
+    Deze methode verdeelt het werk over meerdere threads.
+    Elke thread maakt 1 strook.
+ */
+void Vaart::maakstroken()
+{
+   const auto thread_keuze = std::launch::async;
+   //const auto thread_keuze = std::launch::deferred;
+   
+   for (unsigned int im = 0; im < metingen.size() - 1; im++)
+   {
+      Meting *m1 = metingen[im];
+      Meting *m2 = metingen[im + 1];
+      
+      auto ftr = std::async(thread_keuze,
+         [&](Meting *m1, Meting *m2) -> Strook * 
+         { 
+            return maakstrook(m1, m2); 
+         },
+         m1, m2);
+
+      Strook *s  = ftr.get();
+      voegstrookbij(s);
+   }
+}
+
+
+
+/*
+  Deze methode maakt de stroken zonder gebruik te maken
+  van de threads.
+ 
 void Vaart::maakstroken()
 {
    for (unsigned int im = 0; im < metingen.size() - 1; im++)
@@ -176,28 +230,12 @@ void Vaart::maakstroken()
       Meting *m1 = metingen[im];
       Meting *m2 = metingen[im + 1];
       
-      Strook *s = new Strook();
+      Strook *s = maakstrook(m1, m2);
       voegstrookbij(s);
-      
-      for (unsigned int ip = 0; ip < m1->punten.size() - 1; ip++)
-      {
-         Punt *p1 = m1->punten[ip];
-         Punt *p2 = m1->punten[ip + 1];
-         Punt *p3 = m2->punten[ip + 1];
-         Punt *p4 = m2->punten[ip];
-         
-         Driehoek *d1 = new Driehoek(p1, p2, p4);
-         Driehoek *d2 = new Driehoek(p2, p3, p4);
-
-         s->voegdriehoekbij(d1);
-         s->voegdriehoekbij(d2);
-         
-         //zijden->voegdriehoekbij(d1);
-         //zijden->voegdriehoekbij(d2);
-      }
    }
 }
-
+ */
+ 
 void Vaart::berekenminmax()
 {
    minx = metingen[0]->berekenminx();

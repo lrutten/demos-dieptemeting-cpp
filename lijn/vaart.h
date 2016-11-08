@@ -44,6 +44,7 @@ public:
    void toon(int d = 0);
    void leesbestand(const char *naam);
    int isleeg(char *bf);
+   Strook *maakstrook(Meting *m1, Meting *m2);
    void maakstroken();
    void maakdieptelijnen();
    void berekenminmax();
