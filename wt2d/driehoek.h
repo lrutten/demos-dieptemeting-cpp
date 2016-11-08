@@ -1,0 +1,35 @@
+#ifndef DRIEHOEK_H
+#define DRIEHOEK_H
+
+#include <Wt/WPainter>
+#include "punt.h"
+#include "zijde.h"
+#include "zijden.h"
+#include "dieptelijnen.h"
+
+// $Date$
+// $Author$
+// $Revision$
+
+
+class Driehoek
+{
+friend class Zijden;
+friend class Dieptelijnen;
+
+public:
+   Punt *p1;
+   Punt *p2;
+   Punt *p3;
+   Zijde *z12;
+   Zijde *z23;
+   Zijde *z31;
+   
+   Driehoek(Punt *ip1, Punt *ip2, Punt *p3);
+   void toon(int d = 0);
+   void teken(Wt::WPainter *qp, double minz, double maxz);
+   void dumpobj(FILE *fp);
+};
+
+#endif
+
