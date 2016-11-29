@@ -44,8 +44,8 @@ DWidget::DWidget(Wt::WContainerWidget *parent)
       Kies voor SVG, canvas of een png afbeelding
     */
    //setPreferredMethod(InlineSvgVml);
-   setPreferredMethod(HtmlCanvas);
-   //setPreferredMethod(PngImage);
+   //setPreferredMethod(HtmlCanvas);
+   setPreferredMethod(PngImage);
 
    // bouw alle objecten
    maakvaart();
