@@ -1,8 +1,13 @@
 #ifndef VAART_H
 #define VAART_H
 
-#include <qpainter.h>
-#include <qlistview.h>
+//#include <qpainter.h>
+//#include <qlistview.h>
+
+#include <QtGui>
+#include <Qt3Support/Q3ListView>
+#include <Qt3Support/Q3ListViewItem>
+
 #include "meting.h"
 #include "strook.h"
 
@@ -37,7 +42,7 @@ public:
    void maakstroken();
    void berekenminmax();
    void teken(QPainter *qp, double minz, double maxz);
-   QListViewItem *maakitem(QListView *parent);   
+   Q3ListViewItem *maakitem(Q3ListView *parent);   
    
    double getminx()
    {

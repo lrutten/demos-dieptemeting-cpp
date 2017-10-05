@@ -1,7 +1,10 @@
 #ifndef METING_H
 #define METING_H
 
-#include <qlistview.h>
+#include <QtGui>
+#include <Qt3Support/Q3ListView>
+#include <Qt3Support/Q3ListViewItem>
+
 #include "punt.h"
 
 // $Date$
@@ -20,7 +23,7 @@ public:
    Meting();
    void voegpuntbij(Punt *p);
    void toon(int d = 0);
-   QListViewItem *maakitem(QListViewItem *parent);
+   Q3ListViewItem *maakitem(Q3ListViewItem *parent);
 
    double berekenminx();
    double berekenmaxx();

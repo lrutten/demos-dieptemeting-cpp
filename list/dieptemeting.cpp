@@ -1,9 +1,7 @@
-#include <qapplication.h>
-#include <qsplitter.h>
-#include <qlistview.h>
-#include <qpushbutton.h>
-#include <qfont.h>
-#include <qpainter.h>
+#include <QtGui>
+#include <Qt3Support/Q3ListView>
+#include <Qt3Support/Q3ListViewItem>
+
 #include <stdio.h>
 #include "vaart.h"
 
@@ -17,7 +15,7 @@
 class DVenster : public QWidget
 {
 public:
-    DVenster( QWidget *parent=0, const char *name=0 );
+    DVenster( QWidget *parent=0);
     void maakvaart();
     void maakboom();
     
@@ -29,8 +27,8 @@ private:
 };
 
 
-DVenster::DVenster( QWidget *parent, const char *name )
-        : QWidget( parent, name )
+DVenster::DVenster( QWidget *parent)
+        : QWidget( parent)
 {
    // setMinimumSize( 200, 120 );
    // setMaximumSize( 200, 120 );
@@ -42,7 +40,7 @@ DVenster::DVenster( QWidget *parent, const char *name )
 
 void DVenster::maakboom()
 {
-    QListView *lv = new QListView();
+    Q3ListView *lv = new Q3ListView();
    
     // toon + of - teken
     lv->setRootIsDecorated(true);
@@ -225,21 +223,21 @@ void Driehoek::teken(QPainter *qp, double minz, double maxz)
    
    
    // teken gevulde driehoek
-   QPointArray pts;
-   pts.setPoints( 3,   x1, y1, x2, y2, x3, y3 );
-   qp->drawConvexPolygon( pts );
+   QPolygon polygon(3);
+   polygon.putPoints(0,  3, x1, y1, x2, y2, x3, y3 );
+   qp->drawPolygon( polygon );
 }
 
 
 // Een item voor Vaart bevat alle items voor de metingen.
 
-QListViewItem *Vaart::maakitem(QListView *parent)
+Q3ListViewItem *Vaart::maakitem(Q3ListView *parent)
 {
-   QListViewItem *it = new QListViewItem(parent, "vaart");
+   Q3ListViewItem *it = new Q3ListViewItem(parent, "vaart");
 
    for (int i=0; i<nmetingen; i++)
    {
-      QListViewItem *itk = metingen[i]->maakitem(it);
+      Q3ListViewItem *itk = metingen[i]->maakitem(it);
       it->insertItem(itk);
    }
    return it;
@@ -247,12 +245,12 @@ QListViewItem *Vaart::maakitem(QListView *parent)
 
 
 // Een item voor Meting bevat alle items voor de punten.
-QListViewItem *Meting::maakitem(QListViewItem *parent)
+Q3ListViewItem *Meting::maakitem(Q3ListViewItem *parent)
 {
-   QListViewItem *it = new QListViewItem(parent, "Meting");
+   Q3ListViewItem *it = new Q3ListViewItem(parent, "Meting");
    for (int i=0; i<npunten; i++)
    {
-      QListViewItem *itk = punten[i]->maakitem(it);
+      Q3ListViewItem *itk = punten[i]->maakitem(it);
       it->insertItem(itk);
    }
    return it;
@@ -261,7 +259,7 @@ QListViewItem *Meting::maakitem(QListViewItem *parent)
 
 // Hier wordt een item voor een Punt gemaakt.
 
-QListViewItem *Punt::maakitem(QListViewItem *parent)
+Q3ListViewItem *Punt::maakitem(Q3ListViewItem *parent)
 {
    char bn[50];
    char bx[50];
@@ -275,7 +273,7 @@ QListViewItem *Punt::maakitem(QListViewItem *parent)
    sprintf(bz,"%lf", z);
 
    // Maak het item
-   QListViewItem *it = new QListViewItem(parent, bn, bx, by, bz);
+   Q3ListViewItem *it = new Q3ListViewItem(parent, bn, bx, by, bz);
 
    return it;
 }
@@ -287,7 +285,6 @@ int main( int argc, char **argv )
 
     DVenster *w = new DVenster();
     w->setGeometry( 100, 100, 400, 300 );
-    a.setMainWidget( w );
     w->show();
 /*
     Dit fragment was nodig om te experimenteren

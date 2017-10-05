@@ -5,7 +5,9 @@
 // $Author$
 // $Revision$
 
-#include <qlistview.h>
+#include <QtGui>
+#include <Qt3Support/Q3ListView>
+#include <Qt3Support/Q3ListViewItem>
 
 class Punt
 {
@@ -21,7 +23,7 @@ public:
    
    Punt(double ix, double iy, double iz);
    void toon(int d = 0);
-   QListViewItem *maakitem(QListViewItem *parent);
+   Q3ListViewItem *maakitem(Q3ListViewItem *parent);
 };
 
 #endif
