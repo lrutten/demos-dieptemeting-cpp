@@ -1,8 +1,11 @@
-#include <qapplication.h>
-#include <qpushbutton.h>
-#include <qfont.h>
-#include <qpainter.h>
 #include <stdio.h>
+
+#include <QtGui>
+//#include <qapplication.h>
+//#include <qpushbutton.h>
+//#include <qfont.h>
+//#include <qpainter.h>
+
 #include "vaart.h"
 
 // $Date$
@@ -20,7 +23,7 @@
 class DVenster : public QWidget
 {
 public:
-    DVenster( QWidget *parent=0, const char *name=0 );
+    DVenster(QWidget *parent=0);
     void maakvaart();
     
 protected:
@@ -31,8 +34,8 @@ private:
 };
 
 
-DVenster::DVenster( QWidget *parent, const char *name )
-        : QWidget( parent, name )
+DVenster::DVenster(QWidget *parent)
+        : QWidget(parent)
 {
    // setMinimumSize( 200, 120 );
    // setMaximumSize( 200, 120 );
@@ -215,9 +218,9 @@ void Driehoek::teken(QPainter *qp, double minz, double maxz)
    
    
    // teken gevulde driehoek
-   QPointArray pts;
-   pts.setPoints( 3,   x1, y1, x2, y2, x3, y3 );
-   qp->drawConvexPolygon( pts );
+   QPolygon polygon(3);
+   polygon.putPoints(0, 3, x1, y1, x2, y2, x3, y3);
+   qp->drawPolygon( polygon );
 }
 
 
@@ -228,7 +231,7 @@ int main( int argc, char **argv )
 
     DVenster w;
     w.setGeometry( 100, 100, 400, 300 );
-    a.setMainWidget( &w );
+    //a.setMainWidget( &w );
     w.show();
     return a.exec();
 }
