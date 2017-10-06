@@ -15,7 +15,7 @@ class DVenster : public QWidget
    Q_OBJECT
 
 public:
-   DVenster( QWidget *parent=0, const char *name=0 );
+   DVenster( QWidget *parent=0);
    void maakvaart();
    void maakboom();
     
@@ -30,10 +30,10 @@ public slots:
    void slotLVChanged();
     
 private:
-   QListView *lv;
-   Vaart     *v;
-   Driehoek  *dmm;
-   Driehoek  *dse;
+   Q3ListView *lv;
+   Vaart      *v;
+   Driehoek   *dmm;
+   Driehoek   *dse;
 
    // viewport
    //  de afmetingen van het venster

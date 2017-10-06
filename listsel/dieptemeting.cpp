@@ -1,9 +1,7 @@
-#include <qapplication.h>
-#include <qlistview.h>
-#include <qpushbutton.h>
-#include <qfont.h>
-#include <qwmatrix.h>
-#include <qpainter.h>
+#include <QtGui>
+#include <Qt3Support/Q3ListView>
+#include <Qt3Support/Q3ListViewItem>
+
 #include <stdio.h>
 
 #include "dieptemeting.h"
@@ -18,8 +16,8 @@
 // wordt de selectie van de betrokken driehoek zichtbaar
 // in het DVenster venster.
 
-DVenster::DVenster( QWidget *parent, const char *name )
-        : QWidget( parent, name )
+DVenster::DVenster( QWidget *parent)
+        : QWidget( parent)
 {
    // hierdoor krijg je ook mouse move events
    // zonder de muisknop ingedrukt
@@ -237,9 +235,9 @@ void Driehoek::teken(QPainter *qp, double minz, double maxz)
    
    
    // teken gevulde driehoek
-   QPointArray pts;
-   pts.setPoints( 3,   x1, y1, x2, y2, x3, y3 );
-   qp->drawConvexPolygon( pts );
+   QPolygon polygon(3);
+   polygon.putPoints(0,  3, x1, y1, x2, y2, x3, y3 );
+   qp->drawPolygon( polygon );
 
    if (omuis || selectie)
    {
@@ -264,7 +262,7 @@ void Driehoek::teken(QPainter *qp, double minz, double maxz)
 void DVenster::maakboom()
 {
    // Maak een boomvenster
-   lv = new QListView();
+   lv = new Q3ListView();
    
    // Toon een - of + teken
    lv->setRootIsDecorated(true);
@@ -280,7 +278,7 @@ void DVenster::maakboom()
    v->maakitem(lv);    
 
    // Je kan slechts een item selecteren
-   lv->setSelectionMode( QListView::Single );
+   lv->setSelectionMode( Q3ListView::Single );
    
    // Bij een selectionChanged() signal afkomstig
    // van lv wordt hier slotLVChanged() uitgevoerd.
@@ -297,11 +295,11 @@ void DVenster::maakboom()
   te kunnen bijhouden.
  */
 
-class QListViewDriehoekItem : public QListViewItem
+class QListViewDriehoekItem : public Q3ListViewItem
 {
 public:
-   QListViewDriehoekItem(QListViewItem *it, char *naam, char *np1, char *np2, char *np3, Driehoek *dr)
-     : QListViewItem(it, naam, np1, np2, np3), drieh(dr)
+   QListViewDriehoekItem(Q3ListViewItem *it, char *naam, char *np1, char *np2, char *np3, Driehoek *dr)
+     : Q3ListViewItem(it, naam, np1, np2, np3), drieh(dr)
    {
    }
    Driehoek *getDriehoek()
@@ -313,32 +311,32 @@ private:
    Driehoek *drieh;  // de driehoek die bij deze item hoort
 };
 
-QListViewItem *Vaart::maakitem(QListView *parent)
+Q3ListViewItem *Vaart::maakitem(Q3ListView *parent)
 {
-   QListViewItem *it = new QListViewItem(parent, "vaart");
+   Q3ListViewItem *it = new Q3ListViewItem(parent, "vaart");
 
    for (int i=0; i<nstroken; i++)
    {
-      QListViewItem *itk = stroken[i]->maakitem(it);
+      Q3ListViewItem *itk = stroken[i]->maakitem(it);
       it->insertItem(itk);
    }
    return it;
 }
 
 
-QListViewItem *Strook::maakitem(QListViewItem *parent)
+Q3ListViewItem *Strook::maakitem(Q3ListViewItem *parent)
 {
-   QListViewItem *it = new QListViewItem(parent, "Strook");
+   Q3ListViewItem *it = new Q3ListViewItem(parent, "Strook");
    for (int i=0; i<ndriehoeken; i++)
    {
-      QListViewItem *itk = driehoeken[i]->maakitem(it);
+      Q3ListViewItem *itk = driehoeken[i]->maakitem(it);
       it->insertItem(itk);
    }
    return it;
 }
 
 
-QListViewItem *Driehoek::maakitem(QListViewItem *parent)
+Q3ListViewItem *Driehoek::maakitem(Q3ListViewItem *parent)
 {
    char bn[50];
    char bp1[50];
@@ -349,7 +347,7 @@ QListViewItem *Driehoek::maakitem(QListViewItem *parent)
    sprintf(bp1,"%d", p1->nr);
    sprintf(bp2,"%d", p2->nr);
    sprintf(bp3,"%d", p3->nr);
-   QListViewItem *it = new QListViewDriehoekItem(parent, bn, bp1, bp2, bp3, this);
+   Q3ListViewItem *it = new QListViewDriehoekItem(parent, bn, bp1, bp2, bp3, this);
 
    return it;
 }
@@ -362,7 +360,7 @@ void DVenster::slotLVChanged()
    printf("slotLVChanged\n");
    
    // Haal de huidige selectie op.
-   QListViewItem *it = lv->currentItem();
+   Q3ListViewItem *it = lv->currentItem();
 
    // Dit is een dynamic cast. Het resultaat is NULL (mislukt)
    // of niet-NULL (gelukt). Deze cast is noodzakelijk om 
@@ -401,7 +399,7 @@ int main( int argc, char **argv )
 
     DVenster w;
     w.setGeometry( 100, 100, 400, 300 );
-    a.setMainWidget( &w );
+    //a.setMainWidget( &w );
     w.show();
     return a.exec();
 }

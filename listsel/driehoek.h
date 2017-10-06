@@ -1,8 +1,10 @@
 #ifndef DRIEHOEK_H
 #define DRIEHOEK_H
 
-#include <qlistview.h>
-#include <qpainter.h>
+#include <QtGui>
+#include <Qt3Support/Q3ListView>
+#include <Qt3Support/Q3ListViewItem>
+
 #include "punt.h"
 
 // $Date$
@@ -23,7 +25,7 @@ public:
    Driehoek(Punt *ip1, Punt *ip2, Punt *p3);
    void toon(int d = 0);
    void teken(QPainter *qp, double minz, double maxz);
-   QListViewItem *maakitem(QListViewItem *parent);
+   Q3ListViewItem *maakitem(Q3ListViewItem *parent);
    
    void setomuis(bool b)
    {

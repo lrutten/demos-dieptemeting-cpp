@@ -1,7 +1,10 @@
 #ifndef STROOK_H
 #define STROOK_H
 
-#include <qpainter.h>
+#include <QtGui>
+#include <Qt3Support/Q3ListView>
+#include <Qt3Support/Q3ListViewItem>
+
 #include "meting.h"
 #include "driehoek.h"
 
@@ -24,7 +27,7 @@ public:
    void toon(int d = 0);
    void teken(QPainter *qp, double minz, double maxz);
    Driehoek *zoek(double x, double y);
-   QListViewItem *maakitem(QListViewItem *parent);
+   Q3ListViewItem *maakitem(Q3ListViewItem *parent);
 };
 
 #endif
